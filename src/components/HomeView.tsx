@@ -46,7 +46,9 @@ export default function HomeView({
         )
       case 'mic':
         return (
-          <div className="w-10 h-10 rounded-full flex items-center justify-center bg-zinc-800 text-zinc-300 group-hover:bg-zinc-700 transition-all duration-300">
+          <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+            theme === 'dark' ? 'bg-zinc-800 text-zinc-300 group-hover:bg-zinc-700' : 'bg-zinc-100 text-zinc-600 group-hover:bg-zinc-200'
+          }`}>
             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
             </svg>
@@ -54,7 +56,9 @@ export default function HomeView({
         )
       case 'shield':
         return (
-          <div className="w-10 h-10 rounded-full flex items-center justify-center bg-zinc-800 text-zinc-300 group-hover:bg-zinc-700 transition-all duration-300">
+          <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+            theme === 'dark' ? 'bg-zinc-800 text-zinc-300 group-hover:bg-zinc-700' : 'bg-zinc-100 text-zinc-600 group-hover:bg-zinc-200'
+          }`}>
             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
             </svg>
@@ -63,7 +67,9 @@ export default function HomeView({
       case 'megaphone':
       default:
         return (
-          <div className="w-10 h-10 rounded-full flex items-center justify-center bg-zinc-800 text-zinc-300 group-hover:bg-zinc-700 transition-all duration-300">
+          <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+            theme === 'dark' ? 'bg-zinc-800 text-zinc-300 group-hover:bg-zinc-700' : 'bg-zinc-100 text-zinc-600 group-hover:bg-zinc-200'
+          }`}>
             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
             </svg>
@@ -92,7 +98,7 @@ export default function HomeView({
       {/* Hero Section */}
       <div className="text-center max-w-4xl mx-auto space-y-6">
         <h1 className="font-display font-extrabold text-5xl md:text-7xl leading-tight tracking-tight">
-          <span className="text-zinc-300 dark:text-zinc-300">Practice Your Speech</span>
+          <span className="text-zinc-800 dark:text-zinc-300">Practice Your Speech</span>
           <br />
           <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent">
             with Confidence
@@ -133,7 +139,7 @@ export default function HomeView({
                   </span>
                   <span className="text-xs font-mono font-bold text-zinc-400">{generationProgress}%</span>
                 </div>
-                <div className="w-full bg-zinc-950/50 rounded-full h-1.5 overflow-hidden border border-zinc-800">
+                <div className={`w-full rounded-full h-1.5 overflow-hidden border ${theme === 'dark' ? 'bg-zinc-950/50 border-zinc-800' : 'bg-zinc-100 border-zinc-200'}`}>
                   <div className="bg-gradient-to-r from-indigo-500 to-purple-500 h-1.5 rounded-full transition-all duration-100" style={{ width: `${generationProgress}%` }}></div>
                 </div>
               </div>

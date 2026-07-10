@@ -42,7 +42,7 @@ export default function TeleprompterView({
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
         <button
           onClick={() => setIsPracticing(false)}
-          className={`flex items-center space-x-2 text-sm font-medium ${theme === 'dark' ? 'text-zinc-400' : 'text-zinc-650'} hover:text-indigo-500 transition-colors`}
+          className={`flex items-center space-x-2 text-sm font-medium ${theme === 'dark' ? 'text-zinc-400' : 'text-zinc-600'} hover:text-indigo-500 transition-colors`}
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -148,12 +148,12 @@ export default function TeleprompterView({
         <div
           ref={teleprompterRef}
           className={`h-[420px] overflow-y-auto px-8 md:px-12 py-[200px] text-center select-none leading-relaxed transition-all duration-300 font-medium ${fontSize} ${
-            theme === 'dark' ? 'text-zinc-500' : 'text-zinc-455'
+            theme === 'dark' ? 'text-zinc-500' : 'text-zinc-400'
           }`}
           style={{ scrollBehavior: 'smooth' }}
         >
           {practiceScript.content.split('\n\n').map((paragraph, pIdx) => (
-            <p key={pIdx} className="mb-10 hover:text-zinc-250 transition-colors duration-200">
+            <p key={pIdx} className="mb-10 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-200">
               {paragraph}
             </p>
           ))}
