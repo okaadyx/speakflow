@@ -79,6 +79,17 @@ export default function App() {
     }
   }, [theme])
 
+  // Listen for browser fullscreen changes (e.g. if user presses ESC)
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement)
+    }
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+    }
+  }, [])
+
   // Track Recording Timer
   useEffect(() => {
     if (isRecording) {
@@ -268,20 +279,22 @@ As we look to the future, let us make a promise to prioritize clear communicatio
     <div className={`flex flex-col min-h-screen transition-colors duration-300 ${theme === 'dark' ? 'bg-zinc-950 text-zinc-100' : 'bg-zinc-50 text-zinc-900'}`}>
       
       {/* Header component */}
-      <Header
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        theme={theme}
-        setTheme={setTheme}
-        showSettings={showSettings}
-        setShowSettings={setShowSettings}
-        toggleFullscreen={toggleFullscreen}
-        isFullscreen={isFullscreen}
-        isPracticing={isPracticing}
-        editingScript={editingScript}
-        setEditingScript={setEditingScript}
-        setIsPracticing={setIsPracticing}
-      />
+      {!(isPracticing && isFullscreen) && (
+        <Header
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          theme={theme}
+          setTheme={setTheme}
+          showSettings={showSettings}
+          setShowSettings={setShowSettings}
+          toggleFullscreen={toggleFullscreen}
+          isFullscreen={isFullscreen}
+          isPracticing={isPracticing}
+          editingScript={editingScript}
+          setEditingScript={setEditingScript}
+          setIsPracticing={setIsPracticing}
+        />
+      )}
 
       {/* Target Settings Popover */}
       {showSettings && (
@@ -315,7 +328,11 @@ As we look to the future, let us make a promise to prioritize clear communicatio
       )}
 
       {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 md:px-8 py-8">
+      <main className={`flex-1 w-full mx-auto transition-all duration-300 ${
+        isPracticing && isFullscreen 
+          ? 'max-w-full px-0 py-0' 
+          : 'max-w-7xl px-4 md:px-8 py-8'
+      }`}>
         
         {/* Render View Components depending on Active State */}
         {editingScript ? (
@@ -342,6 +359,8 @@ As we look to the future, let us make a promise to prioritize clear communicatio
             soundBars={soundBars}
             isPlaying={isPlaying}
             setIsPlaying={setIsPlaying}
+            toggleFullscreen={toggleFullscreen}
+            isFullscreen={isFullscreen}
           />
         ) : activeTab === 'home' ? (
           <HomeView
@@ -379,7 +398,7 @@ As we look to the future, let us make a promise to prioritize clear communicatio
       </main>
 
       {/* Footer component */}
-      <Footer theme={theme} />
+      {!(isPracticing && isFullscreen) && <Footer theme={theme} />}
     </div>
   )
 }
