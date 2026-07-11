@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express'
 import { mockScripts } from '../models/scriptModel.js'
 import type { Script } from '../types/script.js'
+import { GnerateScriptService } from '../services/AIServices.js'
 
 let scripts: Script[] = [...mockScripts]
 
@@ -18,24 +19,11 @@ export const getScriptById = (req: Request, res: Response) => {
 }
 
 export const createScript = (req: Request, res: Response) => {
-  const { title, content, category } = req.body
-  
-  if (!title || !content) {
-    return res.status(400).json({ message: 'Title and Content are required' })
-  }
-
-  const wordCount = content.split(/\s+/).filter(Boolean).length
-  const newScript: Script = {
-    id: `script-${Date.now()}`,
-    title,
-    content,
-    editedAt: 'Just now',
-    readTime: `${Math.max(1, Math.ceil(wordCount / 130))} min read`,
-    category: category || 'General'
-  }
-
-  scripts.unshift(newScript)
-  res.status(201).json(newScript)
+  const { topic} = req.body
+  const response = GnerateScriptService(topic)
+  res.status(200).json({
+    content:response
+  })
 }
 
 export const updateScript = (req: Request, res: Response) => {
