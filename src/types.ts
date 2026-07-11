@@ -25,32 +25,7 @@ export interface Inspiration {
   iconType: 'leaf' | 'mic' | 'shield' | 'megaphone'
 }
 
-export const INITIAL_SCRIPTS: Script[] = [
-  {
-    id: 'script-1',
-    title: 'Q3 Marketing Update',
-    content: `Good morning team. Today we're going to review our performance over the last quarter. We've seen incredible growth in our digital channel acquisitions, with a 35% increase in lead generation year-over-year. Key drivers include our refined target marketing campaign and the launch of our updated developer portal. However, we must address the drop in conversion efficiency on our self-serve plans. In the next few minutes, I will outline our core strategies to streamline user onboarding and drive expansion revenue in Q4. Let's dive in.`,
-    editedAt: '2h ago',
-    readTime: '4 min read',
-    category: 'Presentation'
-  },
-  {
-    id: 'script-2',
-    title: 'Product Launch Keynote',
-    content: `We set out to build something that fundamentally changes how we interact with software. A platform designed to speak your language, streamline complex configurations, and build high-fidelity applications with ease. Today, we are proud to introduce SpeakFlow. It's the culmination of months of research, prototyping, and dedication. SpeakFlow bridges the gap between vision and execution, enabling developers to voice their instructions and see them instantly turned into production-grade interfaces. Let's look at how this changes the landscape.`,
-    editedAt: 'Yesterday',
-    readTime: '12 min read',
-    category: 'Presentation'
-  },
-  {
-    id: 'script-3',
-    title: 'Investor Pitch Deck Narration',
-    content: `Our market is expanding at a CAGR of 25%, and our unique positioning allows us to capture early enterprise market share. Welcome, everyone. SpeakFlow is the first AI-driven speech design studio. In a world where speed is developer currency, we enable teams to construct modern apps with the power of speech. We are seeking $3 million in seed funding to accelerate our core core engine research, expand our integrations library, and triple our engineering throughput. Let's discuss our competitive advantages and financial forecast.`,
-    editedAt: '3 days ago',
-    readTime: '8 min read',
-    category: 'Interview Practice'
-  }
-]
+export const INITIAL_SCRIPTS: Script[] = []
 
 export const INSPIRATIONS: Inspiration[] = [
   {
