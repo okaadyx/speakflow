@@ -150,7 +150,7 @@ export default function TeleprompterView({
           }`}
           style={{ scrollBehavior: 'smooth' }}
         >
-          {practiceScript.content.split(/\n+/).map((p) => p.trim()).filter(Boolean).map((paragraph, pIdx) => {
+          {practiceScript.content.split(/(?<=[.!?,;:])\s+|\n+/).map((s) => s.trim()).filter(Boolean).map((paragraph, pIdx) => {
             const isActive = pIdx === activeParagraphIndex
             return (
               <p 
