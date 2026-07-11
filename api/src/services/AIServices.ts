@@ -18,8 +18,8 @@ export const  GnerateScriptService = async (topic:string)=>{
         ]
 
         const response = await model.invoke(message)
-        console.log(response.content);
-        return response.content;
+        console.log(response);
+        return response;
     } catch (error) {
         console.log(error);
     }
