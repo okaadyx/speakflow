@@ -18,12 +18,26 @@ export const getScriptById = (req: Request, res: Response) => {
   res.json(script)
 }
 
-export const createScript = (req: Request, res: Response) => {
-  const { topic} = req.body
-  const response = GnerateScriptService(topic)
-  res.status(200).json({
-    content:response
-  })
+export const createScript = async (req: Request, res: Response) => {
+  const { topic } = req.body
+  
+  if (!topic) {
+    return res.status(400).json({ message: 'Topic is required' })
+  }
+
+  try {
+    const response = await GnerateScriptService(topic)
+    if (!response) {
+      return res.status(500).json({ message: 'Failed to generate script' })
+    }
+    const content = typeof response === 'object' && 'content' in response ? response.content : response
+    return res.status(200).json({
+      content: content
+    })
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({ message: 'Internal server error' })
+  }
 }
 
 export const updateScript = (req: Request, res: Response) => {
