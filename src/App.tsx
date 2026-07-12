@@ -1,284 +1,276 @@
-import { useState, useEffect, useRef } from 'react'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import HomeView from './components/HomeView'
-import MyScriptsView from './components/MyScriptsView'
-import PracticeHistoryView from './components/PracticeHistoryView'
-import EditorView from './components/EditorView'
-import TeleprompterView from './components/TeleprompterView'
+import { useState, useEffect, useRef } from "react";
+import { Header, Footer } from "./components/layout";
+import {
+  HomeView,
+  MyScriptsView,
+  PracticeHistoryView,
+  EditorView,
+  TeleprompterView,
+} from "./components/views";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+import { Button } from "./components/ui";
 
-import type { Script, PracticeLog } from './types'
-import { INITIAL_SCRIPTS } from './types'
+import type { Script, PracticeLog } from "./types";
+import { INITIAL_SCRIPTS } from "./types";
 
 export default function App() {
   // Navigation & Theme State
-  const [activeTab, setActiveTab] = useState<'home' | 'my-scripts' | 'practice-history'>('home')
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
-  
-  // Scripts state
-  const [scripts, setScripts] = useState<Script[]>(() => {
-    const saved = localStorage.getItem('speakflow_scripts')
-    return saved ? JSON.parse(saved) : INITIAL_SCRIPTS
-  })
-  const [inputText, setInputText] = useState('')
-  const [activeCategory, setActiveCategory] = useState('')
-  
-  // AI Generator Simulation State
-  const [isGenerating, setIsGenerating] = useState(false)
-  const [generationProgress, setGenerationProgress] = useState(0)
-  
+  const [activeTab, setActiveTab] = useState<"home" | "my-scripts" | "practice-history">("home");
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+
+  // Scripts & Logs persistent states using custom hook
+  const [scripts, setScripts] = useLocalStorage<Script[]>("speakflow_scripts", INITIAL_SCRIPTS);
+  const [logs, setLogs] = useLocalStorage<PracticeLog[]>("speakflow_logs", []);
+
+  // UI inputs and animation states
+  const [inputText, setInputText] = useState("");
+  const [activeCategory, setActiveCategory] = useState("");
+
+  // AI Generator state (compatibility placeholders)
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generationProgress, setGenerationProgress] = useState(0);
+
   // Teleprompter / Practice State
-  const [practiceScript, setPracticeScript] = useState<Script | null>(null)
-  const [isPracticing, setIsPracticing] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [scrollSpeed, setScrollSpeed] = useState(1.5)
-  const [fontSize, setFontSize] = useState('text-xl md:text-3xl')
-  const [isRecording, setIsRecording] = useState(false)
-  const [recordingSeconds, setRecordingSeconds] = useState(0)
-  const [soundBars, setSoundBars] = useState<number[]>([1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
-  
+  const [practiceScript, setPracticeScript] = useState<Script | null>(null);
+  const [isPracticing, setIsPracticing] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [scrollSpeed, setScrollSpeed] = useState(1.5);
+  const [fontSize, setFontSize] = useState("text-xl md:text-3xl");
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingSeconds, setRecordingSeconds] = useState(0);
+  const [soundBars, setSoundBars] = useState<number[]>([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+
   // Script Editor State
-  const [editingScript, setEditingScript] = useState<Script | null>(null)
-  
-  // Practice History Logs
-  const [logs, setLogs] = useState<PracticeLog[]>(() => {
-    const saved = localStorage.getItem('speakflow_logs')
-    return saved ? JSON.parse(saved) : []
-  })
+  const [editingScript, setEditingScript] = useState<Script | null>(null);
 
-  // Fullscreen Helper
-  const [isFullscreen, setIsFullscreen] = useState(false)
-
-  // Settings Panel State
-  const [showSettings, setShowSettings] = useState(false)
-  const [userWpmTarget, setUserWpmTarget] = useState(130)
+  // Screen layout states
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [userWpmTarget, setUserWpmTarget] = useState(130);
 
   // References
-  const teleprompterRef = useRef<HTMLDivElement>(null)
-  const scrollIntervalRef = useRef<number | null>(null)
-  const timerIntervalRef = useRef<number | null>(null)
-  const visualizerIntervalRef = useRef<number | null>(null)
+  const teleprompterRef = useRef<HTMLDivElement>(null);
+  const scrollIntervalRef = useRef<number | null>(null);
+  const timerIntervalRef = useRef<number | null>(null);
+  const visualizerIntervalRef = useRef<number | null>(null);
 
-  // Persist scripts
+  // Apply Theme class on html root element
   useEffect(() => {
-    localStorage.setItem('speakflow_scripts', JSON.stringify(scripts))
-  }, [scripts])
-
-  // Persist logs
-  useEffect(() => {
-    localStorage.setItem('speakflow_logs', JSON.stringify(logs))
-  }, [logs])
-
-  // Apply Theme on load and change
-  useEffect(() => {
-    const root = document.documentElement
-    if (theme === 'dark') {
-      root.classList.add('dark')
+    const root = document.documentElement;
+    if (theme === "dark") {
+      root.classList.add("dark");
     } else {
-      root.classList.remove('dark')
+      root.classList.remove("dark");
     }
-  }, [theme])
+  }, [theme]);
 
-  // Listen for browser fullscreen changes (e.g. if user presses ESC)
+  // Listen for browser fullscreen exit events (e.g. Escape key)
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement)
-    }
-    document.addEventListener('fullscreenchange', handleFullscreenChange)
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
     return () => {
-      document.removeEventListener('fullscreenchange', handleFullscreenChange)
-    }
-  }, [])
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
 
   // Track Recording Timer
   useEffect(() => {
     if (isRecording) {
       timerIntervalRef.current = window.setInterval(() => {
-        setRecordingSeconds((prev) => prev + 1)
-      }, 1000)
+        setRecordingSeconds((prev) => prev + 1);
+      }, 1000);
     } else {
       if (timerIntervalRef.current) {
-        clearInterval(timerIntervalRef.current)
+        clearInterval(timerIntervalRef.current);
       }
-      setRecordingSeconds(0)
+      setRecordingSeconds(0);
     }
     return () => {
-      if (timerIntervalRef.current) clearInterval(timerIntervalRef.current)
-    }
-  }, [isRecording])
+      if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
+    };
+  }, [isRecording]);
 
-  // Mock voice volume waves
+  // Mock voice volume visualizer waves
   useEffect(() => {
     if (isRecording) {
       visualizerIntervalRef.current = window.setInterval(() => {
-        setSoundBars(
-          Array.from({ length: 10 }, () => Math.floor(Math.random() * 3) + 1)
-        )
-      }, 120)
+        setSoundBars(Array.from({ length: 10 }, () => Math.floor(Math.random() * 3) + 1));
+      }, 120);
     } else {
       if (visualizerIntervalRef.current) {
-        clearInterval(visualizerIntervalRef.current)
+        clearInterval(visualizerIntervalRef.current);
       }
-      setSoundBars([1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+      setSoundBars([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
     }
     return () => {
-      if (visualizerIntervalRef.current) clearInterval(visualizerIntervalRef.current)
-    }
-  }, [isRecording])
+      if (visualizerIntervalRef.current) clearInterval(visualizerIntervalRef.current);
+    };
+  }, [isRecording]);
 
   // Scroll logic for teleprompter
   useEffect(() => {
     if (isPlaying && teleprompterRef.current) {
       const scrollStep = () => {
         if (teleprompterRef.current) {
-          const { scrollTop, scrollHeight, clientHeight } = teleprompterRef.current
+          const { scrollTop, scrollHeight, clientHeight } = teleprompterRef.current;
           if (scrollTop + clientHeight >= scrollHeight - 2) {
-            setIsPlaying(false)
-            return
+            setIsPlaying(false);
+            return;
           }
-          teleprompterRef.current.scrollTop += scrollSpeed
+          teleprompterRef.current.scrollTop += scrollSpeed;
         }
-      }
-      scrollIntervalRef.current = window.setInterval(scrollStep, 30)
+      };
+      scrollIntervalRef.current = window.setInterval(scrollStep, 30);
     } else {
       if (scrollIntervalRef.current) {
-        clearInterval(scrollIntervalRef.current)
+        clearInterval(scrollIntervalRef.current);
       }
     }
     return () => {
-      if (scrollIntervalRef.current) clearInterval(scrollIntervalRef.current)
-    }
-  }, [isPlaying, scrollSpeed])
+      if (scrollIntervalRef.current) clearInterval(scrollIntervalRef.current);
+    };
+  }, [isPlaying, scrollSpeed]);
 
   // Fullscreen Handler
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().then(() => {
-        setIsFullscreen(true)
-      }).catch(err => {
-        console.error('Error enabling fullscreen', err)
-      })
+      document.documentElement
+        .requestFullscreen()
+        .then(() => {
+          setIsFullscreen(true);
+        })
+        .catch((err) => {
+          console.error("Error enabling fullscreen mode", err);
+        });
     } else {
-      document.exitFullscreen()
-      setIsFullscreen(false)
+      document.exitFullscreen();
+      setIsFullscreen(false);
     }
-  }
+  };
 
-  // Trigger Simulated AI Speech Generation
+  // Mock Fallback Speech Generator (if API hook fails)
   const handleAiGenerate = () => {
-    const prompt = inputText.trim() || 'Write a speech about public speaking and confidence.'
-    setIsGenerating(true)
-    setGenerationProgress(0)
+    const prompt = inputText.trim() || "Write a speech about public speaking and confidence.";
+    setIsGenerating(true);
+    setGenerationProgress(0);
 
-    const totalDuration = 2500
-    const step = 50
-    let current = 0
+    const totalDuration = 2500;
+    const step = 50;
+    let current = 0;
 
     const progressInterval = setInterval(() => {
-      current += step
-      const progress = Math.min((current / totalDuration) * 100, 100)
-      setGenerationProgress(Math.floor(progress))
+      current += step;
+      const progress = Math.min((current / totalDuration) * 100, 100);
+      setGenerationProgress(Math.floor(progress));
 
       if (progress >= 100) {
-        clearInterval(progressInterval)
-        
-        const generatedTitle = `AI: ${prompt.split(' ').slice(0, 3).join(' ')}...`
-        const generatedContent = `Ladies and gentlemen, thank you for being here today. Let's discuss a crucial subject: ${prompt.toLowerCase().replace(/^(write a speech about|create a|draft a|write a)\s*/i, '')}. 
+        clearInterval(progressInterval);
 
-When we step onto a stage or speak in a meeting, we are not just delivering words; we are sharing ideas. The path of development is filled with variables, complex configurations, and decisions. But standard practice shows that it is the clarity of communication that creates consensus.
+        const generatedTitle = `AI: ${prompt.split(" ").slice(0, 3).join(" ")}...`;
+        const generatedContent = `Ladies and gentlemen, thank you for being here today. Let's discuss a crucial subject: ${prompt
+          .toLowerCase()
+          .replace(/^(write a speech about|create a|draft a|write a)\s*/i, "")}. 
 
 To communicate with impact, we must practice with intent. We must understand our rhythm, adjust our pacing, and shape our message to match our audience. In a distraction-free space, we can listen to our own pacing, refine our tone, and construct a compelling narrative. 
 
-As we look to the future, let us make a promise to prioritize clear communication. Let us speak not just to be heard, but to inspire, to motivate, and to build bridges between our technical creations and human connections. Thank you.`
+Let us speak not just to be heard, but to inspire, to motivate, and to build bridges between our technical creations and human connections. Thank you.`;
 
         const newScript: Script = {
           id: `script-${Date.now()}`,
           title: generatedTitle,
           content: generatedContent,
-          editedAt: 'Just now',
+          editedAt: "Just now",
           readTime: `${Math.ceil(generatedContent.split(/\s+/).length / 130)} min read`,
-          category: activeCategory || 'Presentation'
-        }
+          category: activeCategory || "Presentation",
+        };
 
-        setScripts([newScript, ...scripts])
-        setInputText('')
-        setActiveCategory('')
-        setIsGenerating(false)
-        
-        // Go straight to practicing the newly generated script
-        setPracticeScript(newScript)
-        setIsPracticing(true)
+        setScripts([newScript, ...scripts]);
+        setInputText("");
+        setActiveCategory("");
+        setIsGenerating(false);
+
+        // Instantly transition to practicing
+        setPracticeScript(newScript);
+        setIsPracticing(true);
       }
-    }, step)
-  }
+    }, step);
+  };
 
   const startPractice = (script: Script) => {
-    setPracticeScript(script)
-    setIsPracticing(true)
-    setIsPlaying(false)
-    setIsRecording(false)
-  }
+    setPracticeScript(script);
+    setIsPracticing(true);
+    setIsPlaying(false);
+    setIsRecording(false);
+  };
 
   const finishPractice = () => {
-    if (!practiceScript) return
-    
-    const wordCount = practiceScript.content.split(/\s+/).filter(Boolean).length
-    const durationMin = recordingSeconds > 0 ? recordingSeconds / 60 : 1.2
-    const durationSec = recordingSeconds > 0 ? recordingSeconds : 72
-    const calculatedWpm = Math.round(wordCount / durationMin)
-    
-    let pace: 'Too Slow' | 'Perfect' | 'Too Fast' = 'Perfect'
-    if (calculatedWpm < userWpmTarget - 20) pace = 'Too Slow'
-    else if (calculatedWpm > userWpmTarget + 20) pace = 'Too Fast'
+    if (!practiceScript) return;
+
+    const wordCount = practiceScript.content.split(/\s+/).filter(Boolean).length;
+    const durationMin = recordingSeconds > 0 ? recordingSeconds / 60 : 1.2;
+    const durationSec = recordingSeconds > 0 ? recordingSeconds : 72;
+    const calculatedWpm = Math.round(wordCount / durationMin);
+
+    let pace: "Too Slow" | "Perfect" | "Too Fast" = "Perfect";
+    if (calculatedWpm < userWpmTarget - 20) pace = "Too Slow";
+    else if (calculatedWpm > userWpmTarget + 20) pace = "Too Fast";
 
     const newLog: PracticeLog = {
       id: `log-${Date.now()}`,
       scriptTitle: practiceScript.title,
-      date: new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) + ' ' + new Date().toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }),
+      date:
+        new Date().toLocaleDateString(undefined, {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }) +
+        " " +
+        new Date().toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" }),
       duration: durationSec,
       wpm: calculatedWpm,
       paceRating: pace,
-      satisfaction: 4
-    }
+      satisfaction: 4,
+    };
 
-    setLogs([newLog, ...logs])
-    setIsPracticing(false)
-    setIsPlaying(false)
-    setIsRecording(false)
-    setActiveTab('practice-history')
-  }
+    setLogs([newLog, ...logs]);
+    setIsPracticing(false);
+    setIsPlaying(false);
+    setIsRecording(false);
+    setActiveTab("practice-history");
+  };
 
   const saveEditedScript = () => {
-    if (!editingScript) return
-    
-    const wordCount = editingScript.content.split(/\s+/).filter(Boolean).length
+    if (!editingScript) return;
+
+    const wordCount = editingScript.content.split(/\s+/).filter(Boolean).length;
     const updated: Script = {
       ...editingScript,
-      editedAt: 'Just now',
-      readTime: `${Math.ceil(wordCount / 130)} min read`
-    }
+      editedAt: "Just now",
+      readTime: `${Math.ceil(wordCount / 130)} min read`,
+    };
 
-    setScripts(scripts.map(s => s.id === updated.id ? updated : s))
-    setEditingScript(null)
-  }
+    setScripts(scripts.map((s) => (s.id === updated.id ? updated : s)));
+    setEditingScript(null);
+  };
 
   const startNewScript = () => {
     const newScript: Script = {
       id: `script-${Date.now()}`,
-      title: 'Untitled Script',
-      content: 'Write your speech content here...',
-      editedAt: 'Just now',
-      readTime: '1 min read',
-      category: 'Presentation'
-    }
-    setScripts([newScript, ...scripts])
-    setEditingScript(newScript)
-  }
+      title: "Untitled Script",
+      content: "Write your speech content here...",
+      editedAt: "Just now",
+      readTime: "1 min read",
+      category: "Presentation",
+    };
+    setScripts([newScript, ...scripts]);
+    setEditingScript(newScript);
+  };
 
   return (
-    <div className={`flex flex-col min-h-screen transition-colors duration-300 ${theme === 'dark' ? 'bg-zinc-950 text-zinc-100' : 'bg-zinc-50 text-zinc-900'}`}>
-      
-      {/* Header component */}
+    <div className="flex flex-col min-h-screen bg-app-bg text-text-primary transition-colors duration-300 font-sans antialiased">
+      {/* Header Layout Component */}
       {!(isPracticing && isFullscreen) && (
         <Header
           activeTab={activeTab}
@@ -298,42 +290,42 @@ As we look to the future, let us make a promise to prioritize clear communicatio
 
       {/* Target Settings Popover */}
       {showSettings && (
-        <div className={`border-b ${theme === 'dark' ? 'bg-zinc-900 border-zinc-800 text-zinc-200' : 'bg-zinc-100 border-zinc-200 text-zinc-800'} px-6 py-4`}>
+        <div className="border-b bg-surface-primary/80 border-border-subtle text-text-primary backdrop-blur-md px-6 py-5 transition-all duration-300">
           <div className="max-w-4xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h4 className="font-semibold text-sm">Practice Settings</h4>
-              <p className="text-xs opacity-75">Configure target speeds and custom speech defaults.</p>
+              <h4 className="font-display font-bold text-base tracking-tight">Practice Options</h4>
+              <p className="text-xs text-text-secondary mt-0.5">
+                Configure global target speaking speeds (Words Per Minute).
+              </p>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <label className="text-xs font-medium">Target WPM (Words Per Minute):</label>
+              <div className="flex items-center space-x-2.5">
+                <label className="text-xs font-semibold text-text-secondary">
+                  Target WPM:
+                </label>
                 <input
                   type="number"
                   min="80"
                   max="240"
                   value={userWpmTarget}
                   onChange={(e) => setUserWpmTarget(Number(e.target.value))}
-                  className={`w-16 px-2 py-1 text-xs rounded border ${theme === 'dark' ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-white border-zinc-300 text-zinc-900'}`}
+                  className="w-20 px-3 py-1.5 text-xs font-bold rounded-xl border border-border-subtle bg-surface-secondary text-text-primary text-center focus:outline-none focus:ring-2 focus:ring-accent/15 focus:border-accent/40"
                 />
               </div>
-              <button
-                onClick={() => setShowSettings(false)}
-                className="px-3 py-1 rounded bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-500 transition-colors"
-              >
+              <Button variant="glass" size="sm" onClick={() => setShowSettings(false)}>
                 Done
-              </button>
+              </Button>
             </div>
           </div>
         </div>
       )}
 
       {/* Main Container */}
-      <main className={`flex-1 w-full mx-auto transition-all duration-300 ${
-        isPracticing && isFullscreen 
-          ? 'max-w-full px-0 py-0' 
-          : 'max-w-7xl px-4 md:px-8 py-8'
-      }`}>
-        
+      <main
+        className={`flex-1 w-full mx-auto transition-all duration-300 ${
+          isPracticing && isFullscreen ? "max-w-full px-0 py-0" : "max-w-7xl px-4 md:px-8 py-10"
+        }`}
+      >
         {/* Render View Components depending on Active State */}
         {editingScript ? (
           <EditorView
@@ -362,7 +354,7 @@ As we look to the future, let us make a promise to prioritize clear communicatio
             toggleFullscreen={toggleFullscreen}
             isFullscreen={isFullscreen}
           />
-        ) : activeTab === 'home' ? (
+        ) : activeTab === "home" ? (
           <HomeView
             theme={theme}
             scripts={scripts}
@@ -378,7 +370,7 @@ As we look to the future, let us make a promise to prioritize clear communicatio
             setEditingScript={setEditingScript}
             setActiveTab={setActiveTab}
           />
-        ) : activeTab === 'my-scripts' ? (
+        ) : activeTab === "my-scripts" ? (
           <MyScriptsView
             theme={theme}
             scripts={scripts}
@@ -388,17 +380,12 @@ As we look to the future, let us make a promise to prioritize clear communicatio
             startNewScript={startNewScript}
           />
         ) : (
-          <PracticeHistoryView
-            theme={theme}
-            logs={logs}
-            setLogs={setLogs}
-          />
+          <PracticeHistoryView theme={theme} logs={logs} setLogs={setLogs} />
         )}
-
       </main>
 
       {/* Footer component */}
       {!(isPracticing && isFullscreen) && <Footer theme={theme} />}
     </div>
-  )
+  );
 }

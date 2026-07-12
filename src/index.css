@@ -1,8 +1,70 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-display: "Outfit", system-ui, -apple-system, sans-serif;
+
+  /* Custom Color Tokens mapped from CSS properties */
+  --color-app-bg: var(--app-bg);
+  --color-surface-primary: var(--surface-primary);
+  --color-surface-secondary: var(--surface-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-border-subtle: var(--border-subtle);
+  --color-hover-surface: var(--hover-surface);
+  
+  /* Primary Accent: Consistent calm Indigo */
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-light: var(--accent-light);
+  
+  /* Feedback Semantic Colors */
+  --color-success: var(--success-color);
+  --color-warning: var(--warning-color);
+  --color-error: var(--error-color);
+}
+
+:root {
+  /* Light Theme: Paper-like off-white interface */
+  --app-bg: #f9f9fb;
+  --surface-primary: #ffffff;
+  --surface-secondary: #f3f3f5;
+  --text-primary: #0f0f12;
+  --text-secondary: #5a5a65;
+  --text-muted: #9494a0;
+  --border-subtle: rgba(226, 226, 230, 0.65);
+  --hover-surface: #eaeaea;
+  
+  --accent: #4f46e5;      /* Indigo 600 */
+  --accent-hover: #4338ca;/* Indigo 700 */
+  --accent-light: #818cf8;/* Indigo 400 */
+  
+  --success-color: #059669; /* Emerald 600 */
+  --warning-color: #d97706; /* Amber 600 */
+  --error-color: #e11d48;   /* Rose 600 */
+}
+
+.dark {
+  /* Dark Theme: Rich charcoal interface */
+  --app-bg: #121214;
+  --surface-primary: #1a1a1e;
+  --surface-secondary: #242429;
+  --text-primary: #f2f2f5;
+  --text-secondary: #a3a3b0;
+  --text-muted: #6b6b75;
+  --border-subtle: rgba(45, 45, 52, 0.7);
+  --hover-surface: #2d2d34;
+  
+  --accent: #4f46e5;      /* Exact same Indigo to maintain consistency */
+  --accent-hover: #5f57ec;/* Mapped for dark theme visibility */
+  --accent-light: #818cf8;
+  
+  --success-color: #34d399; /* Emerald 400 */
+  --warning-color: #fbbf24; /* Amber 400 */
+  --error-color: #fb7185;   /* Rose 400 */
 }
 
 /* Custom Scrollbar */
@@ -16,32 +78,66 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(156, 163, 175, 0.25);
+  background: var(--border-subtle);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(156, 163, 175, 0.45);
+  background: var(--text-muted);
 }
 
-/* Teleprompter text pulse */
-@keyframes activeWord {
-  0% {
-    color: #a855f7;
-    transform: scale(1.02);
+/* Base transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Custom Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
   }
-  100% {
-    color: #c084fc;
-    transform: scale(1.02);
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.active-teleprompter-line {
-  animation: activeWord 1s infinite alternate;
-  font-weight: 600;
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
-/* Wave Animation */
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slideIn {
+  animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scaleUp {
+  animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Sound Wave Animation for Recording */
 @keyframes quiet {
   0%, 100% {
     height: 6px;
@@ -77,30 +173,21 @@
   animation-timing-function: ease-in-out;
 }
 
-.wave-bar:nth-child(2) {
-  animation-delay: 0.1s;
+.wave-bar:nth-child(2) { animation-delay: 0.1s; }
+.wave-bar:nth-child(3) { animation-delay: 0.2s; }
+.wave-bar:nth-child(4) { animation-delay: 0.15s; }
+.wave-bar:nth-child(5) { animation-delay: 0.3s; }
+.wave-bar:nth-child(6) { animation-delay: 0.25s; }
+.wave-bar:nth-child(7) { animation-delay: 0.05s; }
+.wave-bar:nth-child(8) { animation-delay: 0.35s; }
+.wave-bar:nth-child(9) { animation-delay: 0.4s; }
+.wave-bar:nth-child(10) { animation-delay: 0.2s; }
+
+/* Micro-animations */
+.animate-spin-hover:hover {
+  transform: rotate(35deg);
 }
-.wave-bar:nth-child(3) {
-  animation-delay: 0.2s;
-}
-.wave-bar:nth-child(4) {
-  animation-delay: 0.15s;
-}
-.wave-bar:nth-child(5) {
-  animation-delay: 0.3s;
-}
-.wave-bar:nth-child(6) {
-  animation-delay: 0.25s;
-}
-.wave-bar:nth-child(7) {
-  animation-delay: 0.05s;
-}
-.wave-bar:nth-child(8) {
-  animation-delay: 0.35s;
-}
-.wave-bar:nth-child(9) {
-  animation-delay: 0.4s;
-}
-.wave-bar:nth-child(10) {
-  animation-delay: 0.2s;
+
+.active-scale-98:active {
+  transform: scale(0.98);
 }
