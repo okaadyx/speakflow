@@ -7,7 +7,7 @@ class Api {
     scripts: Script
     constructor() {
         this.axiosClient = axios.create({
-            baseURL: "http://localhost:3000/api"
+            baseURL: "https://speakflow-tqpb.vercel.app/api"
         })
         this.scripts = new Script(this.axiosClient)
     }
