@@ -1,4 +1,3 @@
-import React from "react";
 import { DEVELOPER_CONFIG } from "../../config/developer";
 import { Eye, ShieldCheck, Database, Mail } from "lucide-react";
 
