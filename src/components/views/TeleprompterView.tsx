@@ -38,6 +38,30 @@ interface TeleprompterViewProps {
   isFullscreen: boolean;
 }
 
+// Helper to split a script content string into full sentences (one sentence per line)
+const splitIntoScriptLines = (text: string): string[] => {
+  // Split by newlines first to honor paragraph breaks
+  const paragraphs = text.split(/\n+/);
+  const result: string[] = [];
+
+  paragraphs.forEach((para) => {
+    const trimmedPara = para.trim();
+    if (!trimmedPara) return;
+
+    // Split strictly by terminal sentence punctuation (. ! ?) keeping the punctuation attached
+    const sentences = trimmedPara.split(/(?<=[.!?])\s+/);
+
+    sentences.forEach((sentence) => {
+      const trimmedSentence = sentence.trim();
+      if (trimmedSentence) {
+        result.push(trimmedSentence);
+      }
+    });
+  });
+
+  return result.filter(Boolean);
+};
+
 export default function TeleprompterView({
   theme,
   practiceScript,
@@ -132,35 +156,65 @@ export default function TeleprompterView({
 
       {/* Prompter Scrolling Screen */}
       <div
-        className={`relative flex flex-col rounded-3xl border transition-all duration-300 ${
+        className={`relative flex flex-col rounded-3xl border transition-all duration-300 overflow-hidden ${
           isFullscreen
             ? "flex-1 border-none shadow-none rounded-none bg-transparent"
             : "bg-surface-primary/25 border-border-subtle/50 backdrop-blur-md shadow-xl"
         }`}
       >
+        {/* Soft edge blending gradient mask overlays */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-app-bg via-app-bg/75 to-transparent pointer-events-none z-10" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-app-bg via-app-bg/75 to-transparent pointer-events-none z-10" />
+
+
         <div
           ref={teleprompterRef}
           onScroll={handleScroll}
-          className={`overflow-y-auto px-8 md:px-16 py-[220px] text-center select-none leading-relaxed transition-all duration-300 font-medium relative scroll-smooth ${fontSize} ${
-            isFullscreen ? "flex-1 h-full" : "h-[440px]"
+          className={`overflow-y-auto px-4 md:px-10 py-[220px] text-center select-none leading-loose transition-all duration-300 font-bold relative max-w-none w-full ${fontSize} ${
+            isFullscreen ? "flex-1 h-full" : "h-[400px]"
           } text-text-muted/30`}
         >
-          {practiceScript.content
-            .split(/(?<=[.!?,;:])\s+|\n+/)
-            .map((s) => s.trim())
-            .filter(Boolean)
-            .map((paragraph, pIdx) => {
-              const isActive = pIdx === activeParagraphIndex;
+          {splitIntoScriptLines(practiceScript.content)
+            .map((line, pIdx) => {
+              const diff = Math.abs(pIdx - activeParagraphIndex);
+              
+              // High contrast focus styling mapping
+              let pClass = "text-text-muted/20 font-medium scale-[0.96]";
+              let pStyle = { opacity: 0.12 };
+
+              if (diff === 0) {
+                pClass = "text-accent font-extrabold scale-[1.05] drop-shadow-[0_2px_8px_rgba(79,70,229,0.15)] dark:drop-shadow-[0_2px_12px_rgba(129,140,248,0.25)]";
+                pStyle = { opacity: 1 };
+              } else if (diff === 1) {
+                pClass = "text-text-primary font-semibold scale-[1.01]";
+                pStyle = { opacity: 0.5 };
+              } else if (diff === 2) {
+                pClass = "text-text-secondary font-medium scale-[0.98]";
+                pStyle = { opacity: 0.25 };
+              }
+
+              const handleLineClick = (e: React.MouseEvent<HTMLParagraphElement>) => {
+                setActiveParagraphIndex(pIdx);
+                const lineEl = e.currentTarget;
+                const container = teleprompterRef.current;
+                if (container && lineEl) {
+                  const containerCenter = container.clientHeight / 2;
+                  const lineCenter = lineEl.offsetTop + lineEl.clientHeight / 2;
+                  container.scrollTo({
+                    top: lineCenter - containerCenter,
+                    behavior: "smooth"
+                  });
+                }
+              };
+
               return (
                 <p
                   key={pIdx}
-                  className={`mb-12 transition-all duration-300 transform origin-center ${
-                    isActive
-                      ? "text-text-primary font-extrabold opacity-100 scale-[1.03]"
-                      : "text-text-muted/20 opacity-20 scale-98 blur-[0.3px]"
-                  }`}
+                  style={pStyle}
+                  onClick={handleLineClick}
+                  className={`mb-8 transition-all duration-500 ease-out transform origin-center cursor-pointer whitespace-nowrap ${pClass}`}
                 >
-                  {paragraph}
+                  {line}
                 </p>
               );
             })}
@@ -170,7 +224,11 @@ export default function TeleprompterView({
       </div>
 
       {/* Subtle Immersive Control Panel Toolbar */}
-      <div className="flex justify-center items-center gap-4 bg-surface-primary/45 border border-border-subtle/50 px-5 py-3 rounded-full backdrop-blur-md shadow-lg max-w-sm mx-auto mt-8">
+      <div 
+        className={`flex justify-center items-center gap-4 bg-surface-primary/45 border border-border-subtle/50 px-5 py-3 rounded-full backdrop-blur-md shadow-lg max-w-sm mx-auto mt-8 transition-all duration-500 ${
+          isPlaying ? "opacity-25 hover:opacity-100 focus-within:opacity-100" : "opacity-100"
+        }`}
+      >
         {/* Mic Record Toggle */}
         <Button
           variant="glass"

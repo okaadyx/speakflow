@@ -50,7 +50,6 @@ export default function App() {
 
   // References
   const teleprompterRef = useRef<HTMLDivElement>(null);
-  const scrollIntervalRef = useRef<number | null>(null);
   const timerIntervalRef = useRef<number | null>(null);
   const visualizerIntervalRef = useRef<number | null>(null);
 
@@ -109,27 +108,52 @@ export default function App() {
     };
   }, [isRecording]);
 
-  // Scroll logic for teleprompter
+  // Scroll logic for teleprompter using requestAnimationFrame for jitter-free fluid rendering
   useEffect(() => {
-    if (isPlaying && teleprompterRef.current) {
-      const scrollStep = () => {
-        if (teleprompterRef.current) {
-          const { scrollTop, scrollHeight, clientHeight } = teleprompterRef.current;
-          if (scrollTop + clientHeight >= scrollHeight - 2) {
-            setIsPlaying(false);
-            return;
-          }
-          teleprompterRef.current.scrollTop += scrollSpeed;
+    let animationFrameId: number;
+    let lastTime = performance.now();
+    let accumulatedScroll = 0;
+
+    const scrollStep = (time: number) => {
+      if (isPlaying && teleprompterRef.current) {
+        const container = teleprompterRef.current;
+        const { scrollTop, scrollHeight, clientHeight } = container;
+
+        if (scrollTop + clientHeight >= scrollHeight - 2) {
+          setIsPlaying(false);
+          return;
         }
-      };
-      scrollIntervalRef.current = window.setInterval(scrollStep, 30);
-    } else {
-      if (scrollIntervalRef.current) {
-        clearInterval(scrollIntervalRef.current);
+
+        const delta = time - lastTime;
+        lastTime = time;
+
+        // original speed benchmark: scrollSpeed pixels per 30ms (i.e. scrollSpeed / 30 pixels per ms)
+        const pixelsPerMs = scrollSpeed / 30;
+        const scrollAmount = pixelsPerMs * delta;
+
+        // Sub-pixel accumulation to avoid browser truncation / rounding stutter
+        accumulatedScroll += scrollAmount;
+        const integerScroll = Math.floor(accumulatedScroll);
+
+        if (integerScroll > 0) {
+          container.scrollTop += integerScroll;
+          accumulatedScroll -= integerScroll;
+        }
+
+        animationFrameId = requestAnimationFrame(scrollStep);
       }
+    };
+
+    if (isPlaying && teleprompterRef.current) {
+      lastTime = performance.now();
+      accumulatedScroll = 0;
+      animationFrameId = requestAnimationFrame(scrollStep);
     }
+
     return () => {
-      if (scrollIntervalRef.current) clearInterval(scrollIntervalRef.current);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
     };
   }, [isPlaying, scrollSpeed]);
 
