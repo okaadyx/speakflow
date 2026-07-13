@@ -26,7 +26,7 @@ export default function PrivacyPolicyView() {
             <a href="#collection" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
               1. Information We Collect
             </a>
-            <a href="#ai-storage" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all text-accent">
+            <a href="#ai-storage" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
               2. Local Storage & AI
             </a>
             <a href="#retention" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">

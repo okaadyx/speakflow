@@ -97,7 +97,7 @@ export default function Footer({
   return (
     <footer className="py-12 border-t border-border-subtle bg-surface-primary/10 text-text-muted mt-24">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-8">
-        <div className="md:col-span-5 space-y-4">
+        <div className="md:col-span-8 space-y-4">
           <div className="flex items-center space-x-2.5 cursor-pointer group" onClick={() => navigateTo("home")}>
             <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-accent shadow-md shadow-accent/15 group-hover:scale-105 transition-transform duration-300">
               <svg
@@ -156,46 +156,6 @@ export default function Footer({
 
         <div className="md:col-span-3 space-y-4">
           <h4 className="text-xs font-bold text-text-primary uppercase tracking-wider">
-            Explore
-          </h4>
-          <nav className="flex flex-col gap-2.5 text-xs font-medium text-text-secondary">
-            <button
-              onClick={() => navigateTo("home")}
-              className={`text-left hover:text-accent transition-colors cursor-pointer ${
-                activeTab === "home" ? "text-accent font-bold" : ""
-              }`}
-            >
-              Home View
-            </button>
-            <button
-              onClick={() => navigateTo("my-scripts")}
-              className={`text-left hover:text-accent transition-colors cursor-pointer ${
-                activeTab === "my-scripts" ? "text-accent font-bold" : ""
-              }`}
-            >
-              My Scripts
-            </button>
-            <button
-              onClick={() => navigateTo("support")}
-              className={`text-left hover:text-accent transition-colors cursor-pointer ${
-                activeTab === "support" ? "text-accent font-bold" : ""
-              }`}
-            >
-              Support Desk
-            </button>
-            <button
-              onClick={() => navigateTo("about")}
-              className={`text-left hover:text-accent transition-colors cursor-pointer ${
-                activeTab === "about" ? "text-accent font-bold" : ""
-              }`}
-            >
-              About SpeakFlow
-            </button>
-          </nav>
-        </div>
-
-        <div className="md:col-span-3 space-y-4">
-          <h4 className="text-xs font-bold text-text-primary uppercase tracking-wider">
             Privacy & Trust
           </h4>
           <nav className="flex flex-col gap-2.5 text-xs font-medium text-text-secondary">
@@ -214,6 +174,14 @@ export default function Footer({
               }`}
             >
               Terms & Conditions
+            </button>
+            <button
+              onClick={() => navigateTo("support")}
+              className={`text-left hover:text-accent transition-colors cursor-pointer ${
+                activeTab === "support" ? "text-accent font-bold" : ""
+              }`}
+            >
+              Support Desk
             </button>
           </nav>
         </div>

@@ -29,7 +29,7 @@ export default function TermsConditionsView() {
             <a href="#responsibilities" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
               2. User Conduct
             </a>
-            <a href="#ai-disclaimer" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all text-accent">
+            <a href="#ai-disclaimer" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
               3. AI Disclaimer
             </a>
             <a href="#intellectual-property" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
