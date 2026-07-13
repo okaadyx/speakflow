@@ -17,9 +17,9 @@ export const  GnerateScriptService = async (topic:string)=>{
         ]
 
         const response = await model.invoke(message)
-        console.log(response);
         return response;
     } catch (error) {
-        console.log(error);
+      console.error("AI service generation error:", error);
+      throw error;
     }
 }
