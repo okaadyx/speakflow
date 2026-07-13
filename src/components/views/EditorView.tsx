@@ -23,7 +23,6 @@ export default function EditorView({
 
   return (
     <div className="space-y-6 animate-fadeIn">
-      {/* Top action row */}
       <div className="flex items-center justify-between gap-4">
         <Button
           variant="ghost"
@@ -41,9 +40,7 @@ export default function EditorView({
         </Button>
       </div>
 
-      {/* Editor Body */}
       <Card className="p-6 md:p-8 space-y-6">
-        {/* Title Input */}
         <div className="space-y-1.5">
           <label className="text-[10px] uppercase font-extrabold tracking-wider text-text-muted">
             Script Title
@@ -57,7 +54,6 @@ export default function EditorView({
           />
         </div>
 
-        {/* Category & Stats row */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-2 border-t border-border-subtle">
           <div className="flex items-center space-x-2.5">
             <span className="text-xs font-semibold text-text-muted uppercase tracking-wider">
@@ -87,7 +83,6 @@ export default function EditorView({
           </div>
         </div>
 
-        {/* Editor Textarea */}
         <div className="space-y-1.5 pt-2">
           <label className="text-[10px] uppercase font-extrabold tracking-wider text-text-muted">
             Speech Content

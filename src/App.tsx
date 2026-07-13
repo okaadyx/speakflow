@@ -18,23 +18,18 @@ import type { Script, PracticeLog } from "./types";
 import { INITIAL_SCRIPTS } from "./types";
 
 export default function App() {
-  // Navigation & Theme State
   const [activeTab, setActiveTab] = useState<string>("home");
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
-  // Scripts & Logs persistent states using custom hook
   const [scripts, setScripts] = useLocalStorage<Script[]>("speakflow_scripts", INITIAL_SCRIPTS);
   const [logs, setLogs] = useLocalStorage<PracticeLog[]>("speakflow_logs", []);
 
-  // UI inputs and animation states
   const [inputText, setInputText] = useState("");
   const [activeCategory, setActiveCategory] = useState("");
 
-  // AI Generator state (compatibility placeholders)
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationProgress, setGenerationProgress] = useState(0);
 
-  // Teleprompter / Practice State
   const [practiceScript, setPracticeScript] = useState<Script | null>(null);
   const [isPracticing, setIsPracticing] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -44,20 +39,24 @@ export default function App() {
   const [recordingSeconds, setRecordingSeconds] = useState(0);
   const [soundBars, setSoundBars] = useState<number[]>([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
 
-  // Script Editor State
   const [editingScript, setEditingScript] = useState<Script | null>(null);
 
-  // Screen layout states
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [userWpmTarget, setUserWpmTarget] = useState(130);
 
-  // References
+  const handleSetIsRecording = (val: boolean) => {
+    setIsRecording(val);
+    if (!val) {
+      setRecordingSeconds(0);
+      setSoundBars([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+    }
+  };
+
   const teleprompterRef = useRef<HTMLDivElement>(null);
   const timerIntervalRef = useRef<number | null>(null);
   const visualizerIntervalRef = useRef<number | null>(null);
 
-  // Apply Theme class on html root element
   useEffect(() => {
     const root = document.documentElement;
     if (theme === "dark") {
@@ -67,7 +66,6 @@ export default function App() {
     }
   }, [theme]);
 
-  // Listen for browser fullscreen exit events (e.g. Escape key)
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
@@ -88,7 +86,6 @@ export default function App() {
       if (timerIntervalRef.current) {
         clearInterval(timerIntervalRef.current);
       }
-      setRecordingSeconds(0);
     }
     return () => {
       if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
@@ -105,7 +102,6 @@ export default function App() {
       if (visualizerIntervalRef.current) {
         clearInterval(visualizerIntervalRef.current);
       }
-      setSoundBars([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
     }
     return () => {
       if (visualizerIntervalRef.current) clearInterval(visualizerIntervalRef.current);
@@ -128,7 +124,6 @@ export default function App() {
     };
   }, [isPracticing, isFullscreen]);
 
-  // Fullscreen Handler
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement
@@ -145,7 +140,6 @@ export default function App() {
     }
   };
 
-  // Mock Fallback Speech Generator (if API hook fails)
   const handleAiGenerate = () => {
     const prompt = inputText.trim() || "Write a speech about public speaking and confidence.";
     setIsGenerating(true);
@@ -186,7 +180,6 @@ Let us speak not just to be heard, but to inspire, to motivate, and to build bri
         setActiveCategory("");
         setIsGenerating(false);
 
-        // Instantly transition to practicing
         setPracticeScript(newScript);
         setIsPracticing(true);
       }
@@ -197,7 +190,7 @@ Let us speak not just to be heard, but to inspire, to motivate, and to build bri
     setPracticeScript(script);
     setIsPracticing(true);
     setIsPlaying(false);
-    setIsRecording(false);
+    handleSetIsRecording(false);
   };
 
   const finishPractice = () => {
@@ -232,7 +225,7 @@ Let us speak not just to be heard, but to inspire, to motivate, and to build bri
     setLogs([newLog, ...logs]);
     setIsPracticing(false);
     setIsPlaying(false);
-    setIsRecording(false);
+    handleSetIsRecording(false);
     setActiveTab("practice-history");
   };
 
@@ -265,7 +258,6 @@ Let us speak not just to be heard, but to inspire, to motivate, and to build bri
 
   return (
     <div className="flex flex-col min-h-screen bg-app-bg text-text-primary transition-colors duration-300 font-sans antialiased">
-      {/* Header Layout Component */}
       {!(isPracticing && isFullscreen) && (
         <Header
           activeTab={activeTab}
@@ -283,7 +275,6 @@ Let us speak not just to be heard, but to inspire, to motivate, and to build bri
         />
       )}
 
-      {/* Target Settings Popover */}
       {showSettings && (
         <div className="border-b bg-surface-primary/80 border-border-subtle text-text-primary backdrop-blur-md px-6 py-5 transition-all duration-300">
           <div className="max-w-4xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -315,13 +306,11 @@ Let us speak not just to be heard, but to inspire, to motivate, and to build bri
         </div>
       )}
 
-      {/* Main Container */}
       <main
         className={`flex-1 w-full mx-auto transition-all duration-300 ${
           isPracticing && isFullscreen ? "max-w-full px-0 py-0" : "max-w-7xl px-4 md:px-8 py-10"
         }`}
       >
-        {/* Render View Components depending on Active State */}
         {editingScript ? (
           <EditorView
             theme={theme}
@@ -341,7 +330,7 @@ Let us speak not just to be heard, but to inspire, to motivate, and to build bri
             scrollSpeed={scrollSpeed}
             setScrollSpeed={setScrollSpeed}
             isRecording={isRecording}
-            setIsRecording={setIsRecording}
+            setIsRecording={handleSetIsRecording}
             recordingSeconds={recordingSeconds}
             soundBars={soundBars}
             isPlaying={isPlaying}
@@ -387,7 +376,6 @@ Let us speak not just to be heard, but to inspire, to motivate, and to build bri
         )}
       </main>
 
-      {/* Footer component */}
       {!(isPracticing && isFullscreen) && (
         <Footer
           theme={theme}

@@ -16,7 +16,6 @@ import {
   BookOpen,
 } from "lucide-react";
 
-// FAQ type definition
 interface FAQItem {
   question: string;
   answer: string;
@@ -74,7 +73,6 @@ export default function SupportView() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Accordion state for FAQs
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
   const toggleFaqIndex = (idx: number) => {
@@ -86,7 +84,6 @@ export default function SupportView() {
     if (!formName || !formEmail || !formMessage) return;
 
     setIsSubmitting(true);
-    // Simulate a premium network request
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
@@ -94,14 +91,12 @@ export default function SupportView() {
       setFormEmail("");
       setFormSubject("");
       setFormMessage("");
-      // Reset success status after 6 seconds
       setTimeout(() => setIsSubmitted(false), 6000);
     }, 1500);
   };
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 animate-fadeIn space-y-12 text-text-primary">
-      {/* Hero section */}
       <div className="text-center space-y-3 py-8">
         <div className="inline-flex items-center justify-center p-3.5 rounded-3xl bg-accent/10 text-accent mb-2">
           <HelpCircle className="w-10 h-10" />
@@ -114,10 +109,7 @@ export default function SupportView() {
         </p>
       </div>
 
-      {/* Main Grid: FAQs & Form */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        {/* FAQs Accordion Section (Left/Top) */}
         <div className="lg:col-span-7 space-y-6">
           <div className="space-y-1">
             <h2 className="text-xl md:text-2xl font-display font-bold">Frequently Asked Questions</h2>
@@ -162,9 +154,7 @@ export default function SupportView() {
           </div>
         </div>
 
-        {/* Support Request Form & Contact Card (Right/Bottom) */}
         <div className="lg:col-span-5 space-y-6">
-          {/* Contact Card */}
           <div className="bg-surface-primary/25 border border-border-subtle/50 backdrop-blur-md p-6 rounded-3xl space-y-4 shadow-lg">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-accent/10 text-accent flex items-center justify-center font-bold">
@@ -204,7 +194,6 @@ export default function SupportView() {
             </div>
           </div>
 
-          {/* Contact Form */}
           <div className="bg-surface-primary/25 border border-border-subtle/50 backdrop-blur-md p-6 rounded-3xl shadow-lg space-y-4">
             <div className="space-y-1">
               <h3 className="text-sm font-bold text-text-primary uppercase tracking-wider">
@@ -316,10 +305,7 @@ export default function SupportView() {
 
       </div>
 
-      {/* Grid: Bug Report & Feature Request Sections */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-border-subtle/40 pt-10">
-        
-        {/* Report a Bug Card */}
         <div className="bg-surface-primary/15 border border-border-subtle/50 p-6 rounded-3xl space-y-4 hover:border-accent/25 transition-all">
           <div className="flex items-center gap-3 text-accent">
             <Bug className="w-6 h-6" />
@@ -339,7 +325,6 @@ export default function SupportView() {
           </a>
         </div>
 
-        {/* Feature Requests Card */}
         <div className="bg-surface-primary/15 border border-border-subtle/50 p-6 rounded-3xl space-y-4 hover:border-accent/25 transition-all">
           <div className="flex items-center gap-3 text-accent">
             <Lightbulb className="w-6 h-6" />
@@ -359,7 +344,6 @@ export default function SupportView() {
 
       </div>
 
-      {/* Community Channels (5 links) */}
       <div className="border-t border-border-subtle/40 pt-10 space-y-6">
         <div className="text-center space-y-1">
           <h3 className="text-xl font-display font-bold">Community & Links</h3>

@@ -4,7 +4,6 @@ import { Eye, ShieldCheck, Database, Mail } from "lucide-react";
 export default function PrivacyPolicyView() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 animate-fadeIn space-y-8 text-text-primary">
-      {/* Hero Section */}
       <div className="text-center space-y-3 py-6">
         <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-accent/10 text-accent mb-2">
           <Eye className="w-8 h-8" />
@@ -18,9 +17,7 @@ export default function PrivacyPolicyView() {
         <p className="text-xs text-text-muted">Last updated: July 2026</p>
       </div>
 
-      {/* Main Content Grid */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Quick Nav */}
         <div className="md:col-span-1 space-y-2.5 md:sticky md:top-24 h-fit">
           <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider block px-3">
             Core Policies
@@ -44,7 +41,6 @@ export default function PrivacyPolicyView() {
           </nav>
         </div>
 
-        {/* Policy Text */}
         <div className="md:col-span-3 space-y-10 bg-surface-primary/25 border border-border-subtle/50 backdrop-blur-md p-6 md:p-8 rounded-3xl shadow-xl">
           
           <section id="intro" className="space-y-3">

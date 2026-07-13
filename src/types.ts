@@ -11,10 +11,10 @@ export interface PracticeLog {
   id: string
   scriptTitle: string
   date: string
-  duration: number // in seconds
+  duration: number
   wpm: number
   paceRating: 'Too Slow' | 'Perfect' | 'Too Fast'
-  satisfaction: number // 1-5 stars
+  satisfaction: number
 }
 
 export interface Inspiration {

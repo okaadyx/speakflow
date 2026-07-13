@@ -39,7 +39,6 @@ interface TeleprompterViewProps {
   isFullscreen: boolean;
 }
 
-// ─── Professional Teleprompter Script Formatter ──────────────────────────────
 // Splits raw scripts into read-optimized lines at natural sentence/phrase boundaries.
 interface ScriptLine {
   text: string;
@@ -159,7 +158,6 @@ const formatScriptLines = (text: string): ScriptLine[] => {
   return result;
 };
 
-// Available font sizes mapping
 const FONT_SIZES = [
   "text-base md:text-xl",
   "text-lg md:text-2xl",
@@ -189,7 +187,6 @@ export default function TeleprompterView({
 }: TeleprompterViewProps) {
   void theme;
 
-  // UI Modes & States
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMirrored, setIsMirrored] = useState(false);
   const [isFocusMode] = useState(false);
@@ -199,6 +196,17 @@ export default function TeleprompterView({
   const [containerHeight, setContainerHeight] = useState(450);
 
   const scrollOffsetRef = useRef(0);
+
+  // Adjust state during render phase if key props change
+  const [prevPracticeScriptContent, setPrevPracticeScriptContent] = useState(practiceScript.content);
+  const [prevFontSize, setPrevFontSize] = useState(fontSize);
+
+  if (practiceScript.content !== prevPracticeScriptContent || fontSize !== prevFontSize) {
+    setPrevPracticeScriptContent(practiceScript.content);
+    setPrevFontSize(fontSize);
+    setIsPlaying(false);
+    setActiveLineIndex(0);
+  }
 
   // Synchronize play state and speed inside refs for the frame loop
   const isPlayingRef = useRef(isPlaying);
@@ -212,7 +220,6 @@ export default function TeleprompterView({
     speedRef.current = scrollSpeed;
   }, [scrollSpeed]);
 
-  // Forces the scroll container to return to the absolute beginning
   const forceResetToTop = () => {
     setIsPlaying(false);
     const container = teleprompterRef.current;
@@ -223,11 +230,14 @@ export default function TeleprompterView({
     setActiveLineIndex(0);
   };
 
-  // Re-verify alignment when content or font configuration is updated
+  // Re-verify alignment when content or font configuration is updated (DOM only)
   useEffect(() => {
-    forceResetToTop();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [practiceScript.content, fontSize]);
+    const container = teleprompterRef.current;
+    if (container) {
+      container.scrollTop = 0;
+      scrollOffsetRef.current = 0;
+    }
+  }, [practiceScript.content, fontSize, teleprompterRef]);
 
   // Reactive ResizeObserver tracking dimensions, scroll containment boundaries, and window resize
   useEffect(() => {
@@ -242,7 +252,6 @@ export default function TeleprompterView({
     const observer = new ResizeObserver(onResize);
     observer.observe(container);
 
-    // Initial measurement setup
     setContainerHeight(container.clientHeight);
 
     return () => observer.disconnect();
@@ -325,7 +334,6 @@ export default function TeleprompterView({
         }
       `}</style>
 
-      {/* Top Header Controls (Fades in on hover when in Focus Mode) */}
       <div
         className={`flex items-center justify-between gap-4 mb-6 transition-all duration-300 ${
           isFocusMode
@@ -367,7 +375,6 @@ export default function TeleprompterView({
         </div>
       </div>
 
-      {/* Main Reading Frame */}
       <div
         className={`relative flex flex-col rounded-3xl border transition-all duration-500 overflow-hidden ${
           isFullscreen
@@ -375,7 +382,6 @@ export default function TeleprompterView({
             : "bg-surface-primary/25 border-border-subtle/50 backdrop-blur-md shadow-xl"
         } ${isFocusMode ? "border-none bg-black" : ""}`}
       >
-        {/* Continuous Opacity Faders */}
         <div
           className={`absolute top-0 left-0 right-0 h-36 pointer-events-none z-20 ${
             isFocusMode
@@ -391,7 +397,6 @@ export default function TeleprompterView({
           }`}
         />
 
-        {/* Script Content Viewer */}
         <div
           ref={teleprompterRef}
           onScroll={handleScroll}
@@ -409,8 +414,8 @@ export default function TeleprompterView({
               const absDiff = Math.abs(diff);
 
               // Continuous graduated styling for premium focus readability
-              let opacity = 1;
-              let colorClass = "text-text-primary";
+              let opacity: number;
+              let colorClass: string;
 
               if (absDiff === 0) {
                 opacity = 1;
@@ -471,7 +476,6 @@ export default function TeleprompterView({
         </div>
       </div>
 
-      {/* Floating Bottom Control Panel */}
       <div
         className={`flex items-center justify-center gap-6 bg-surface-primary/45 border border-border-subtle/50 px-6 py-4 rounded-3xl backdrop-blur-md shadow-lg max-w-xs mx-auto mt-6 transition-all duration-500 ${
           isFocusMode ? "bg-zinc-950/85 border-zinc-800 text-white" : ""
@@ -523,7 +527,6 @@ export default function TeleprompterView({
         </Button>
       </div>
 
-      {/* Prompter Config Settings Drawer */}
       <Sheet
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}

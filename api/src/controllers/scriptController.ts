@@ -42,7 +42,7 @@ export const createScript = async (req: Request, res: Response) => {
     if (!response) {
       return res.status(500).json({ message: 'Failed to generate script' })
     }
-    const content = (typeof response === 'object' && response !== null && 'content' in response ? (response as any).content : response) as string
+    const content = (typeof response === 'object' && response !== null && 'content' in response ? (response as { content: string }).content : response) as string
     
     const wordCount = content.split(/\s+/).filter(Boolean).length
     const cleanPrompt = topic.trim()

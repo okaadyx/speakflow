@@ -47,7 +47,7 @@ export default function HomeView({
     mutate(
       { topic: prompt },
       {
-        onSuccess: (resData: any) => {
+        onSuccess: (resData) => {
           if (resData && resData.script) {
             setScripts([resData.script, ...scripts]);
             startPractice(resData.script);
@@ -100,7 +100,6 @@ export default function HomeView({
 
   return (
     <div className="space-y-16 animate-fadeIn">
-      {/* Hero Section */}
       <div className="text-center max-w-4xl mx-auto space-y-6">
        
 
@@ -138,7 +137,6 @@ export default function HomeView({
               disabled={isPending}
             />
 
-            {/* AI Generating Indicator */}
             {isPending && (
               <div className="mb-4 text-left">
                 <div className="flex items-center justify-between mb-1.5">
@@ -196,7 +194,6 @@ export default function HomeView({
           </div>
         </div>
 
-        {/* Quick Filter Categories pills */}
         <div className="flex flex-wrap items-center justify-center gap-2 pt-4">
           {CATEGORIES.map((cat) => {
             const isSelected = activeCategory === cat;
@@ -217,7 +214,6 @@ export default function HomeView({
         </div>
       </div>
 
-      {/* Recent Scripts Section */}
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="font-display font-extrabold text-2xl md:text-3xl tracking-tight text-text-primary">
@@ -274,7 +270,6 @@ export default function HomeView({
         )}
       </div>
 
-      {/* Need Inspiration Section */}
       <div className="space-y-6">
         <h2 className="font-display font-extrabold text-2xl md:text-3xl tracking-tight text-text-primary">
           Need Inspiration?
