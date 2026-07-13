@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none">
+  <rect width="800" height="500" fill="#121214"/>
+  <rect x="40" y="30" width="720" height="50" rx="12" fill="#1A1A1E" stroke="#2D2D34"/>
+  <rect x="60" y="45" width="120" height="20" rx="4" fill="#4F46E5"/>
+  <rect x="200" y="48" width="60" height="14" rx="3" fill="#2D2D34"/>
+  <circle cx="720" cy="55" r="12" fill="#FBBF24" opacity="0.6"/>
+  <rect x="100" y="120" width="600" height="40" rx="8" fill="#F2F2F5" opacity="0.9"/>
+  <rect x="200" y="180" width="400" height="16" rx="4" fill="#A3A3B0"/>
+  <rect x="80" y="230" width="640" height="120" rx="16" fill="#1A1A1E" stroke="#2D2D34"/>
+  <rect x="100" y="250" width="500" height="12" rx="3" fill="#2D2D34"/>
+  <rect x="100" y="275" width="400" height="12" rx="3" fill="#2D2D34"/>
+  <rect x="100" y="310" width="160" height="28" rx="8" fill="#4F46E5"/>
+  <rect x="80" y="390" width="200" height="28" rx="14" fill="#4F46E5" opacity="0.2"/>
+  <rect x="300" y="390" width="120" height="28" rx="14" fill="#242429" stroke="#2D2D34"/>
+  <text x="400" y="480" text-anchor="middle" fill="#6B6B75" font-family="system-ui" font-size="13">Dark Theme  Replace with screenshot</text>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none">
+  <rect width="800" height="500" fill="#F9F9FB"/>
+  <rect x="60" y="40" width="680" height="380" rx="20" fill="#FFFFFF" stroke="#E2E2E6" opacity="0.8"/>
+  <rect x="200" y="120" width="400" height="16" rx="4" fill="#9494A0" opacity="0.3"/>
+  <rect x="220" y="160" width="360" height="16" rx="4" fill="#4F46E5"/>
+  <rect x="240" y="200" width="320" height="14" rx="3" fill="#0F0F12" opacity="0.65"/>
+  <rect x="260" y="230" width="280" height="14" rx="3" fill="#0F0F12" opacity="0.35"/>
+  <rect x="280" y="260" width="240" height="14" rx="3" fill="#9494A0" opacity="0.2"/>
+  <rect x="300" y="290" width="200" height="14" rx="3" fill="#9494A0" opacity="0.1"/>
+  <line x1="100" y1="250" x2="700" y2="250" stroke="#4F46E5" stroke-width="1" stroke-dasharray="4 4" opacity="0.4"/>
+  <rect x="300" y="400" width="200" height="48" rx="24" fill="#FFFFFF" stroke="#E2E2E6" opacity="0.9"/>
+  <circle cx="370" cy="424" r="16" fill="#F3F3F5" stroke="#E2E2E6"/>
+  <circle cx="430" cy="424" r="20" fill="#4F46E5" opacity="0.1" stroke="#4F46E5"/>
+  <circle cx="490" cy="424" r="16" fill="#F3F3F5" stroke="#E2E2E6"/>
+  <text x="400" y="480" text-anchor="middle" fill="#9494A0" font-family="system-ui" font-size="13">Teleprompter  Replace with screenshot</text>
+</svg>
