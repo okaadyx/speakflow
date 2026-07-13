@@ -31,14 +31,14 @@ export const getScriptById = async (req: Request, res: Response) => {
 }
 
 export const createScript = async (req: Request, res: Response) => {
-  const { topic } = req.body as { topic?: string }
+  const { topic, difficulty } = req.body as { topic?: string; difficulty?: string }
   
   if (!topic) {
     return res.status(400).json({ message: 'Topic is required' })
   }
 
   try {
-    const response = await GnerateScriptService(topic)
+    const response = await GnerateScriptService(topic, difficulty)
     if (!response) {
       return res.status(500).json({ message: 'Failed to generate script' })
     }

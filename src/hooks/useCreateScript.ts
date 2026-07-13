@@ -4,7 +4,7 @@ import { queryClient } from "../utils/queryClient";
 
 export const useCreateScript = () => {
     return useMutation({
-        mutationFn: (data: { topic: string }) => api.scripts.createScripts(data),
+        mutationFn: (data: { topic: string; difficulty?: string }) => api.scripts.createScripts(data),
         onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: ["scripts"]

@@ -1,4 +1,5 @@
 import React from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 
 export interface SheetProps {
@@ -29,7 +30,7 @@ export const Sheet: React.FC<SheetProps> = ({
 
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <>
       {/* Backdrop */}
       <div
@@ -59,7 +60,8 @@ export const Sheet: React.FC<SheetProps> = ({
         </div>
         <div className="flex-1 overflow-y-auto pr-1 -mr-2 scroll-smooth">{children}</div>
       </div>
-    </>
+    </>,
+    document.body
   );
 };
 export default Sheet;

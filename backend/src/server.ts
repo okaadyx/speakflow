@@ -22,6 +22,10 @@ app.use((req, res) => {
 })
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`[server]: SpeakFlow API listening at http://localhost:${PORT}`)
-})
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`[server]: SpeakFlow API listening at http://localhost:${PORT}`)
+  })
+}
+
+export default app

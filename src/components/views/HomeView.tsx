@@ -1,4 +1,5 @@
-import { Sparkles, PenTool, ChevronRight, Clock, Sprout, Mic, Shield, Megaphone, Eraser } from "lucide-react";
+import { useState } from "react";
+import { Sparkles, PenTool, ChevronRight, Clock, Sprout, Mic, Shield, Megaphone, Eraser, Smile, Award, Trophy } from "lucide-react";
 import type { Script } from "../../types";
 import { INSPIRATIONS, CATEGORIES } from "../../types";
 import { useCreateScript } from "../../hooks/useCreateScript";
@@ -14,7 +15,7 @@ interface HomeViewProps {
   setActiveCategory: (cat: string) => void;
   isGenerating: boolean;
   generationProgress: number;
-  handleAiGenerate: () => void;
+  handleAiGenerate: (customPrompt?: string, customDifficulty?: string) => void;
   startPractice: (script: Script) => void;
   setEditingScript: (script: Script | null) => void;
   setActiveTab: (tab: "home" | "my-scripts" | "practice-history") => void;
@@ -38,14 +39,26 @@ export default function HomeView({
   void theme;
   void isGenerating;
   void generationProgress;
-  void handleAiGenerate;
+
+  const [difficulty, setDifficulty] = useState<"beginner" | "intermediate" | "advanced">(() => {
+    const saved = localStorage.getItem("speakflow_ai_difficulty");
+    if (saved === "beginner" || saved === "intermediate" || saved === "advanced") {
+      return saved;
+    }
+    return "beginner";
+  });
+
+  const handleDifficultyChange = (level: "beginner" | "intermediate" | "advanced") => {
+    setDifficulty(level);
+    localStorage.setItem("speakflow_ai_difficulty", level);
+  };
 
   const { mutate, isPending } = useCreateScript();
 
   const handleGeneration = () => {
     const prompt = inputText.trim() || "Write a speech about public speaking and confidence.";
     mutate(
-      { topic: prompt },
+      { topic: prompt, difficulty },
       {
         onSuccess: (resData) => {
           if (resData && resData.script) {
@@ -54,6 +67,10 @@ export default function HomeView({
             setInputText("");
           }
         },
+        onError: (err) => {
+          console.error("AI prompt generation error, using fallback:", err);
+          handleAiGenerate(prompt, difficulty);
+        }
       }
     );
   };
@@ -148,6 +165,39 @@ export default function HomeView({
                 <Progress value={95} className="animate-pulse" />
               </div>
             )}
+
+            <div className="border-t border-border-subtle/50 my-3 pt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-left">
+              <span className="text-[10px] font-bold text-text-muted uppercase tracking-wider">
+                Difficulty Level
+              </span>
+              <div className="inline-flex p-0.5 rounded-xl bg-surface-secondary/40 border border-border-subtle/50">
+                {(
+                  [
+                    { id: "beginner", label: "Beginner", icon: <Smile className="w-3.5 h-3.5" /> },
+                    { id: "intermediate", label: "Intermediate", icon: <Award className="w-3.5 h-3.5" /> },
+                    { id: "advanced", label: "Advanced", icon: <Trophy className="w-3.5 h-3.5" /> },
+                  ] as const
+                ).map((item) => {
+                  const isSelected = difficulty === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      disabled={isPending}
+                      onClick={() => handleDifficultyChange(item.id)}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold cursor-pointer transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
+                        isSelected
+                          ? "bg-white dark:bg-zinc-800 text-accent shadow-sm"
+                          : "text-text-secondary hover:text-text-primary"
+                      }`}
+                    >
+                      {item.icon}
+                      <span>{item.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-between border-t border-border-subtle pt-4 gap-4">
               <div className="text-xs text-text-muted font-semibold">

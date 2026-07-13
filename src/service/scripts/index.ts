@@ -6,7 +6,7 @@ export class Script{
     constructor(client:AxiosInstance){
         this.client = client
     }
-    createScripts = async (data: { topic: string }): Promise<{ script: ScriptData }> => {
+    createScripts = async (data: { topic: string; difficulty?: string }): Promise<{ script: ScriptData }> => {
         const response = await this.client.post<{ script: ScriptData }>("/scripts", data)
         return response.data
     }

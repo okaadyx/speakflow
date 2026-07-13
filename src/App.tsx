@@ -140,8 +140,9 @@ export default function App() {
     }
   };
 
-  const handleAiGenerate = () => {
-    const prompt = inputText.trim() || "Write a speech about public speaking and confidence.";
+  const handleAiGenerate = (customPrompt?: string, customDifficulty?: string) => {
+    const prompt = customPrompt || inputText.trim() || "Write a speech about public speaking and confidence.";
+    const diff = customDifficulty || localStorage.getItem("speakflow_ai_difficulty") || "beginner";
     setIsGenerating(true);
     setGenerationProgress(0);
 
@@ -158,13 +159,28 @@ export default function App() {
         clearInterval(progressInterval);
 
         const generatedTitle = `AI: ${prompt.split(" ").slice(0, 3).join(" ")}...`;
-        const generatedContent = `Ladies and gentlemen, thank you for being here today. Let's discuss a crucial subject: ${prompt
-          .toLowerCase()
-          .replace(/^(write a speech about|create a|draft a|write a)\s*/i, "")}. 
+        const subject = prompt.toLowerCase().replace(/^(write a speech about|create a|draft a|write a)\s*/i, "");
 
-To communicate with impact, we must practice with intent. We must understand our rhythm, adjust our pacing, and shape our message to match our audience. In a distraction-free space, we can listen to our own pacing, refine our tone, and construct a compelling narrative. 
+        let generatedContent: string;
+        if (diff === "beginner") {
+          generatedContent = `Hello everyone. Thank you for coming today. Let's talk about: ${subject}. 
 
-Let us speak not just to be heard, but to inspire, to motivate, and to build bridges between our technical creations and human connections. Thank you.`;
+Speaking is easy when we practice. We can learn step by step. Short sentences help us. Simple words make it clear. 
+
+We can speak slowly. We can smile and feel happy. Thank you very much.`;
+        } else if (diff === "intermediate") {
+          generatedContent = `Hello and welcome. Today, I want to discuss: ${subject}. 
+
+Communicating clearly is a key skill for all of us. When we practice with short paragraphs and steady pacing, we can convey our ideas with confidence. 
+
+Let's build our fluency and connect with the audience together. Thank you.`;
+        } else {
+          generatedContent = `Distinguished guests, ladies, and gentlemen. It is an absolute privilege to address you today on a subject of paramount importance: ${subject}. 
+
+Articulation is not merely the delivery of words, but the strategic architecture of message and meaning. In this distraction-free sandbox, we refine our cadence, command our transitions, and project a persuasive narrative. 
+
+Let us speak to inspire and build bridges between our concepts. Thank you.`;
+        }
 
         const newScript: Script = {
           id: `script-${Date.now()}`,

@@ -1,4 +1,5 @@
 import React from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 
 export interface DialogProps {
@@ -29,7 +30,7 @@ export const Dialog: React.FC<DialogProps> = ({
 
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn">
       {/* Backdrop: translucent dark overlay */}
       <div
@@ -59,7 +60,8 @@ export const Dialog: React.FC<DialogProps> = ({
 
         <div>{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 export default Dialog;

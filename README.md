@@ -94,19 +94,17 @@ SpeakFlow is built for:
 
 ## Screenshots
 
-> Replace the placeholders below with actual screenshots before publishing.
-
 | Home Screen | AI Generator |
 |:-----------:|:------------:|
-| ![Home Screen](docs/assets/screenshots/home-placeholder.svg) | ![AI Generator](docs/assets/screenshots/ai-generator-placeholder.svg) |
+| ![Home Screen](docs/assets/screenshots/home.png) | ![AI Generator](docs/assets/screenshots/ai-generator.png) |
 
 | Teleprompter | Fullscreen Mode |
 |:------------:|:---------------:|
-| ![Teleprompter](docs/assets/screenshots/teleprompter-placeholder.svg) | ![Fullscreen](docs/assets/screenshots/fullscreen-placeholder.svg) |
+| ![Teleprompter](docs/assets/screenshots/teleprompter.png) | ![Fullscreen](docs/assets/screenshots/fullscreen.png) |
 
 | Dark Theme | Mobile View |
 |:----------:|:-----------:|
-| ![Dark Theme](docs/assets/screenshots/dark-theme-placeholder.svg) | ![Mobile View](docs/assets/screenshots/mobile-placeholder.svg) |
+| ![Dark Theme](docs/assets/screenshots/dark-theme.png) | ![Mobile View](docs/assets/screenshots/mobile.png) |
 
 ---
 
