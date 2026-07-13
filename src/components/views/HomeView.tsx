@@ -171,7 +171,7 @@ export default function HomeView({
                         inputText.trim() ||
                         "Welcome back. Let's practice speaking clearly and pacing ourselves.",
                       editedAt: "Just now",
-                      readTime: "1 min read",
+                      readTime: "1 min",
                       category: activeCategory || "Presentation",
                     };
                     setScripts([newScript, ...scripts]);
@@ -265,11 +265,10 @@ export default function HomeView({
                     {script.content}
                   </p>
                 </CardContent>
-                <CardFooter className="flex items-center justify-between text-3xs font-bold text-text-muted uppercase tracking-wider">
-                  <span>Edited {script.editedAt}</span>
+                <CardFooter className="flex items-center justify-end text-[10px] font-bold text-text-muted uppercase tracking-wider">
                   <div className="flex items-center gap-1">
                     <Clock className="w-3.5 h-3.5" />
-                    <span>{script.readTime}</span>
+                    <span>{script.readTime.replace(/ read$/i, "")}</span>
                   </div>
                 </CardFooter>
               </Card>

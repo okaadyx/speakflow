@@ -108,54 +108,7 @@ export default function App() {
     };
   }, [isRecording]);
 
-  // Scroll logic for teleprompter using requestAnimationFrame for jitter-free fluid rendering
-  useEffect(() => {
-    let animationFrameId: number;
-    let lastTime = performance.now();
-    let accumulatedScroll = 0;
-
-    const scrollStep = (time: number) => {
-      if (isPlaying && teleprompterRef.current) {
-        const container = teleprompterRef.current;
-        const { scrollTop, scrollHeight, clientHeight } = container;
-
-        if (scrollTop + clientHeight >= scrollHeight - 2) {
-          setIsPlaying(false);
-          return;
-        }
-
-        const delta = time - lastTime;
-        lastTime = time;
-
-        // original speed benchmark: scrollSpeed pixels per 30ms (i.e. scrollSpeed / 30 pixels per ms)
-        const pixelsPerMs = scrollSpeed / 30;
-        const scrollAmount = pixelsPerMs * delta;
-
-        // Sub-pixel accumulation to avoid browser truncation / rounding stutter
-        accumulatedScroll += scrollAmount;
-        const integerScroll = Math.floor(accumulatedScroll);
-
-        if (integerScroll > 0) {
-          container.scrollTop += integerScroll;
-          accumulatedScroll -= integerScroll;
-        }
-
-        animationFrameId = requestAnimationFrame(scrollStep);
-      }
-    };
-
-    if (isPlaying && teleprompterRef.current) {
-      lastTime = performance.now();
-      accumulatedScroll = 0;
-      animationFrameId = requestAnimationFrame(scrollStep);
-    }
-
-    return () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-    };
-  }, [isPlaying, scrollSpeed]);
+  // Scroll logic is now handled self-contained inside the TeleprompterView component to ensure layout-relative, jitter-free fluid rendering.
 
   // Fullscreen Handler
   const toggleFullscreen = () => {
@@ -206,7 +159,7 @@ Let us speak not just to be heard, but to inspire, to motivate, and to build bri
           title: generatedTitle,
           content: generatedContent,
           editedAt: "Just now",
-          readTime: `${Math.ceil(generatedContent.split(/\s+/).length / 130)} min read`,
+          readTime: `${Math.ceil(generatedContent.split(/\s+/).length / 130)} min`,
           category: activeCategory || "Presentation",
         };
 
@@ -272,7 +225,7 @@ Let us speak not just to be heard, but to inspire, to motivate, and to build bri
     const updated: Script = {
       ...editingScript,
       editedAt: "Just now",
-      readTime: `${Math.ceil(wordCount / 130)} min read`,
+      readTime: `${Math.ceil(wordCount / 130)} min`,
     };
 
     setScripts(scripts.map((s) => (s.id === updated.id ? updated : s)));
@@ -285,7 +238,7 @@ Let us speak not just to be heard, but to inspire, to motivate, and to build bri
       title: "Untitled Script",
       content: "Write your speech content here...",
       editedAt: "Just now",
-      readTime: "1 min read",
+      readTime: "1 min",
       category: "Presentation",
     };
     setScripts([newScript, ...scripts]);

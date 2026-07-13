@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Plus, Edit2, Trash2, BookOpen, AlertTriangle } from "lucide-react";
+import { Plus, Edit2, Trash2, BookOpen, AlertTriangle, Clock } from "lucide-react";
 import type { Script } from "../../types";
 import { Button, Card, CardHeader, CardTitle, CardContent, CardFooter, Badge, Dialog } from "../ui";
 
@@ -104,8 +104,11 @@ export default function MyScriptsView({
                 </p>
               </CardContent>
 
-              <CardFooter className="flex items-center justify-between text-3xs font-bold text-text-muted uppercase tracking-wider">
-                <span>Edited {script.editedAt}</span>
+              <CardFooter className="flex items-center justify-between text-[10px] font-bold text-text-muted uppercase tracking-wider">
+                <div className="flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>{script.readTime.replace(/ read$/i, "")}</span>
+                </div>
 
                 <div className="flex items-center space-x-1">
                   <Button
