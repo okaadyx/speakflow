@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none">
+  <rect width="800" height="500" fill="#121214"/>
+  <rect x="220" y="140" width="360" height="18" rx="4" fill="#F2F2F5" opacity="0.15"/>
+  <rect x="240" y="190" width="320" height="20" rx="4" fill="#4F46E5"/>
+  <rect x="260" y="230" width="280" height="16" rx="3" fill="#F2F2F5" opacity="0.65"/>
+  <rect x="280" y="265" width="240" height="16" rx="3" fill="#F2F2F5" opacity="0.35"/>
+  <rect x="300" y="300" width="200" height="16" rx="3" fill="#A3A3B0" opacity="0.2"/>
+  <rect x="320" y="335" width="160" height="16" rx="3" fill="#6B6B75" opacity="0.1"/>
+  <rect x="300" y="420" width="200" height="44" rx="22" fill="#1A1A1E" stroke="#2D2D34"/>
+  <circle cx="370" cy="442" r="14" fill="#242429"/>
+  <circle cx="430" cy="442" r="18" fill="#4F46E5" opacity="0.2" stroke="#4F46E5"/>
+  <circle cx="490" cy="442" r="14" fill="#242429"/>
+  <text x="400" y="40" text-anchor="middle" fill="#6B6B75" font-family="system-ui" font-size="12">Fullscreen Mode</text>
+  <text x="400" y="480" text-anchor="middle" fill="#6B6B75" font-family="system-ui" font-size="13">Fullscreen  Replace with screenshot</text>
+</svg>

@@ -21,9 +21,7 @@ export default function MyScriptsView({
   startNewScript,
 }: MyScriptsViewProps) {
   void theme;
-  void theme;
 
-  // Modal State for Deletion
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
   const deleteTargetTitle = scripts.find((s) => s.id === deleteTargetId)?.title || "";
 
@@ -45,7 +43,6 @@ export default function MyScriptsView({
 
   return (
     <div className="space-y-6 animate-fadeIn">
-      {/* View Header */}
       <div className="flex items-center justify-between gap-4">
         <div>
           <h2 className="font-display font-extrabold text-3xl tracking-tight text-text-primary">
@@ -62,7 +59,6 @@ export default function MyScriptsView({
         </Button>
       </div>
 
-      {/* Grid List */}
       {scripts.length === 0 ? (
         <Card className="rounded-2xl border-2 border-dashed p-16 text-center bg-surface-secondary/10">
           <div className="mx-auto w-12 h-12 rounded-xl flex items-center justify-center bg-surface-secondary border border-border-subtle text-text-muted mb-4">
@@ -118,18 +114,18 @@ export default function MyScriptsView({
                       setEditingScript(script);
                     }}
                     title="Edit script content"
-                    className="w-9 h-9 p-0 rounded-lg hover:text-accent hover:bg-hover-surface"
+                    className="w-10 h-10 p-0 rounded-lg hover:text-accent hover:bg-hover-surface"
                   >
-                    <Edit2 className="w-5 h-5" />
+                    <Edit2 className="w-5.5 h-5.5" />
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={(e) => openDeleteDialog(script.id, e)}
                     title="Delete script"
-                    className="w-9 h-9 p-0 rounded-lg hover:text-error hover:bg-error/5"
+                    className="w-10 h-10 p-0 rounded-lg hover:text-error hover:bg-error/5"
                   >
-                    <Trash2 className="w-5 h-5" />
+                    <Trash2 className="w-5.5 h-5.5" />
                   </Button>
                 </div>
               </CardFooter>
@@ -138,7 +134,6 @@ export default function MyScriptsView({
         </div>
       )}
 
-      {/* Styled accessible confirmation Dialog for Deletion */}
       <Dialog
         isOpen={deleteTargetId !== null}
         onClose={closeDeleteDialog}

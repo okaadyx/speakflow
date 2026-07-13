@@ -2,7 +2,7 @@ import React from "react";
 import { cn } from "../../utils/cn";
 
 export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
-  value?: number; // percentage (0 - 100)
+  value?: number;
 }
 
 export const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(

@@ -1,9 +1,10 @@
 import { Sun, Moon, Settings, Maximize, Minimize, BookOpen, History, Home } from "lucide-react";
 import { Button } from "../ui/button";
+import type { Script } from "../../types";
 
 interface HeaderProps {
   activeTab: string;
-  setActiveTab: (tab: any) => void;
+  setActiveTab: (tab: string) => void;
   theme: "dark" | "light";
   setTheme: (theme: "dark" | "light") => void;
   showSettings: boolean;
@@ -11,8 +12,8 @@ interface HeaderProps {
   toggleFullscreen: () => void;
   isFullscreen: boolean;
   isPracticing: boolean;
-  editingScript: any;
-  setEditingScript: (val: any) => void;
+  editingScript: Script | null;
+  setEditingScript: (val: Script | null) => void;
   setIsPracticing: (val: boolean) => void;
 }
 
@@ -30,7 +31,7 @@ export default function Header({
   setEditingScript,
   setIsPracticing,
 }: HeaderProps) {
-  const navigateTo = (tab: any) => {
+  const navigateTo = (tab: string) => {
     setActiveTab(tab);
     setIsPracticing(false);
     setEditingScript(null);
@@ -44,7 +45,6 @@ export default function Header({
 
   return (
     <header className="sticky top-0 z-30 px-6 py-4 flex items-center justify-between border-b backdrop-blur-lg bg-surface-primary/65 border-border-subtle transition-all duration-300">
-      {/* Brand Logo */}
       <div className="flex items-center space-x-8">
         <div
           className="flex items-center space-x-2.5 cursor-pointer group"
@@ -68,7 +68,6 @@ export default function Header({
           </span>
         </div>
 
-        {/* Dynamic Navigation Pill bar */}
         <nav className="hidden md:flex items-center space-x-1 p-1 bg-surface-secondary border border-border-subtle rounded-xl">
           {navItems.map((item) => {
             const isSelected =
@@ -94,9 +93,7 @@ export default function Header({
         </nav>
       </div>
 
-      {/* Header Actions */}
       <div className="flex items-center space-x-2">
-        {/* Light/Dark Toggle */}
         <Button
           variant="ghost"
           size="sm"
@@ -111,7 +108,6 @@ export default function Header({
           )}
         </Button>
 
-        {/* Settings button */}
         <Button
           variant={showSettings ? "glass" : "ghost"}
           size="sm"
@@ -124,7 +120,6 @@ export default function Header({
           <Settings className="w-4 h-4" />
         </Button>
 
-        {/* Fullscreen Toggle */}
         <Button
           variant="ghost"
           size="sm"

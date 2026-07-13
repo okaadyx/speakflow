@@ -4,7 +4,6 @@ import { Info, Award, User, Code, Heart, MessageSquare } from "lucide-react";
 export default function AboutView() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 animate-fadeIn space-y-10 text-text-primary">
-      {/* Hero Section */}
       <div className="text-center space-y-3 py-6">
         <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-accent/10 text-accent mb-2">
           <Info className="w-8 h-8" />
@@ -17,7 +16,6 @@ export default function AboutView() {
         </p>
       </div>
 
-      {/* About Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="p-6 bg-surface-primary/25 border border-border-subtle/50 rounded-3xl shadow-md space-y-3">
           <div className="flex items-center gap-2.5 text-accent">
@@ -55,7 +53,6 @@ export default function AboutView() {
         </div>
       </div>
 
-      {/* Developer Spotlight */}
       <div className="bg-surface-primary/25 border border-border-subtle/50 p-6 md:p-8 rounded-3xl shadow-lg space-y-6">
         <h3 className="text-lg font-bold flex items-center gap-2 border-b border-border-subtle/40 pb-2.5">
           <User className="w-5 h-5 text-accent" />
@@ -76,7 +73,6 @@ export default function AboutView() {
               Aajad Yadav is a software engineer passionate about building high-performance, user-centric interfaces. SpeakFlow was conceived as a distraction-free, privacy-first studio dashboard for public speakers, content creators, and learners to review their vocal delivery, timing, and cadence.
             </p>
 
-            {/* Social Pill Buttons */}
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5 pt-2">
               <a
                 href={DEVELOPER_CONFIG.portfolioUrl}

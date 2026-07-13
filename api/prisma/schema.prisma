@@ -26,3 +26,13 @@ model PracticeLog {
   satisfaction Int      @default(3)
   createdAt    DateTime @default(now())
 }
+
+model SupportMessage {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  subject   String   @default("")
+  category  String   @default("support")
+  message   String
+  createdAt DateTime @default(now())
+}

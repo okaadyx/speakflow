@@ -2,7 +2,6 @@ import {ChatOpenAI} from "@langchain/openai"
 import "dotenv/config"
 import { HumanMessage, SystemMessage } from "langchain"
 import { SYSTEM_PROMPTS } from "../prompts/systemPrompts.js"
-import { log } from "console"
 
 const model = new ChatOpenAI({
     model:process.env.AI_MODEL,
@@ -18,9 +17,9 @@ export const  GnerateScriptService = async (topic:string)=>{
         ]
 
         const response = await model.invoke(message)
-        console.log(response);
         return response;
     } catch (error) {
-        console.log(error);
+      console.error("AI service generation error:", error);
+      throw error;
     }
 }

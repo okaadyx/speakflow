@@ -16,7 +16,6 @@ export default function PracticeHistoryView({
 }: PracticeHistoryViewProps) {
   void theme;
 
-  // Modal state for log deletion
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
   const deleteTargetTitle = logs.find((l) => l.id === deleteTargetId)?.scriptTitle || "";
 
@@ -49,7 +48,6 @@ export default function PracticeHistoryView({
 
   return (
     <div className="space-y-6 animate-fadeIn">
-      {/* View Header */}
       <div>
         <h2 className="font-display font-extrabold text-3xl tracking-tight text-text-primary">
           Practice History Log
@@ -119,10 +117,10 @@ export default function PracticeHistoryView({
                         variant="ghost"
                         size="sm"
                         onClick={() => openDeleteDialog(log.id)}
-                        className="w-8 h-8 p-0 rounded-lg text-text-muted hover:text-error hover:bg-error/5"
+                        className="w-9 h-9 p-0 rounded-lg text-text-muted hover:text-error hover:bg-error/5"
                         title="Delete log record"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="w-5 h-5" />
                       </Button>
                     </td>
                   </tr>
@@ -133,7 +131,6 @@ export default function PracticeHistoryView({
         </Card>
       )}
 
-      {/* Styled accessible confirmation Dialog for Log Deletion */}
       <Dialog
         isOpen={deleteTargetId !== null}
         onClose={closeDeleteDialog}
