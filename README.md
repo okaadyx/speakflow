@@ -8,8 +8,7 @@
 
 <br />
 
-<!-- Banner placeholder — replace with your project screenshot or branded asset -->
-![SpeakFlow Banner](docs/assets/banner-placeholder.svg)
+![SpeakFlow Banner](docs/assets/banner.svg)
 
 <br />
 
