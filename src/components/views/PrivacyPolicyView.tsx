@@ -1,5 +1,5 @@
 import { DEVELOPER_CONFIG } from "../../config/developer";
-import { Eye, ShieldCheck, Database, Mail } from "lucide-react";
+import { Eye, ShieldCheck, Database, Mail, Info, FileText } from "lucide-react";
 
 export default function PrivacyPolicyView() {
   return (
@@ -12,7 +12,7 @@ export default function PrivacyPolicyView() {
           Privacy Policy
         </h1>
         <p className="text-text-secondary max-w-xl mx-auto text-sm md:text-base">
-          Your privacy is our core priority. Learn how we handle your templates, local storage, and AI prompts.
+          This policy describes how we collect, use, and protect your information when using SpeakFlow.
         </p>
         <p className="text-xs text-text-muted">Last updated: July 2026</p>
       </div>
@@ -23,20 +23,26 @@ export default function PrivacyPolicyView() {
             Core Policies
           </span>
           <nav className="flex flex-col gap-1 text-xs font-semibold text-text-secondary">
+            <a href="#intro" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
+              1. Introduction
+            </a>
             <a href="#collection" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
-              1. Information We Collect
+              2. Information We Collect
             </a>
-            <a href="#ai-storage" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
-              2. Local Storage & AI
+            <a href="#storage" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
+              3. Local Storage & Cookies
             </a>
-            <a href="#retention" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
-              3. Data Retention
+            <a href="#ai-processing" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
+              4. AI Data Processing
             </a>
-            <a href="#user-rights" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
-              4. Your Rights & Ownership
+            <a href="#security" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
+              5. Security & Retention
+            </a>
+            <a href="#rights" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
+              6. User Rights & Third-Parties
             </a>
             <a href="#contact" className="px-3 py-2 rounded-lg hover:bg-accent/10 hover:text-accent transition-all">
-              5. Support Inquiries
+              7. Privacy Inquiries
             </a>
           </nav>
         </div>
@@ -49,10 +55,10 @@ export default function PrivacyPolicyView() {
               <span>1. Introduction</span>
             </h3>
             <p className="text-sm text-text-secondary leading-relaxed">
-              At <strong>{DEVELOPER_CONFIG.productName}</strong>, developed by <strong>{DEVELOPER_CONFIG.developerName}</strong>, we are committed to safeguarding your privacy. Our teleprompter platform is designed to respect your data ownership and handle script generation securely.
+              At <strong>{DEVELOPER_CONFIG.productName}</strong>, developed by <strong>{DEVELOPER_CONFIG.developerName}</strong>, your data privacy is our absolute priority. We design our platform to operate with a privacy-first mindset, ensuring that your scripts, templates, and speech metrics remain secure and under your absolute control.
             </p>
             <p className="text-sm text-text-secondary leading-relaxed">
-              We do not sell, rent, or distribute your practice templates or private drafts to third-party advertising companies.
+              This Privacy Policy details the types of information we collect, how that data is stored locally or processed via external services, and your rights concerning your personal information.
             </p>
           </section>
 
@@ -62,58 +68,98 @@ export default function PrivacyPolicyView() {
               <span>2. Information We Collect</span>
             </h3>
             <p className="text-sm text-text-secondary leading-relaxed">
-              We minimize data collection to the absolute necessity:
+              We collect information in two main ways to offer our teleprompter services:
             </p>
-            <ul className="list-disc pl-5 text-sm text-text-secondary space-y-1.5">
-              <li><strong>Local Scripts & Templates:</strong> All scripts you compose, edit, or customize are saved in your web browser's local storage database.</li>
-              <li><strong>Usage Analytics:</strong> Standard analytics might be logged to track feature clicks, load speeds, and generic system responsiveness.</li>
-              <li><strong>Speech Synthesis/Mic Prompts:</strong> Standard microphone access is strictly used locally inside your browser tab to render practice volume levels and metrics. We do not store or transmit raw voice recordings.</li>
-            </ul>
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <h4 className="text-xs font-extrabold uppercase tracking-wide text-text-muted">A. Information You Provide</h4>
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  <strong>User Compositions:</strong> Any speech scripts, draft templates, category tags, or practice text logs you directly type, edit, or import into the application.
+                </p>
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  <strong>Support Communications:</strong> Name, email address, message subjects, and inquiries you provide when submitting a support ticket or requesting assistance.
+                </p>
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-xs font-extrabold uppercase tracking-wide text-text-muted">B. Automatically Collected Information</h4>
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  <strong>Interface Configuration:</strong> Local preferences such as font size choices, scroll velocity parameters, mirror configuration toggles, and light/dark theme choices are stored to maintain application state.
+                </p>
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  <strong>Speech Volume Metrics:</strong> Standard microphone decibel levels and visual sound waves are processed locally in real-time. We do not store, record, or transmit audio files.
+                </p>
+              </div>
+            </div>
           </section>
 
-          <section id="ai-storage" className="space-y-3 bg-accent/5 p-4.5 rounded-2xl border border-accent/15">
+          <section id="storage" className="space-y-3">
+            <h3 className="text-lg font-bold flex items-center gap-2 border-b border-border-subtle/40 pb-2">
+              <Database className="w-4 h-4 text-accent" />
+              <span>3. Local Storage & Cookies</span>
+            </h3>
+            <p className="text-sm text-text-secondary leading-relaxed">
+              We leverage HTML5 Local Storage (such as `localStorage`) instead of tracking cookies to save your configurations, logs, and speech files directly inside your own web browser's storage sandbox.
+            </p>
+            <div className="p-4 rounded-2xl bg-surface-secondary/50 border border-border-subtle/80 space-y-2">
+              <div className="flex items-center gap-2 text-accent">
+                <Info className="w-4 h-4" />
+                <span className="text-xs font-bold uppercase tracking-wider">Browser Control</span>
+              </div>
+              <p className="text-xs text-text-secondary leading-relaxed">
+                Because all files reside in your local browser sandbox, clearing your browser cache or deleting application storage will clear your saved scripts. We do not use third-party tracking or advertising cookies.
+              </p>
+            </div>
+          </section>
+
+          <section id="ai-processing" className="space-y-3 bg-accent/5 p-4.5 rounded-2xl border border-accent/15">
             <h3 className="text-base font-extrabold text-accent flex items-center gap-2">
-              <Database className="w-4 h-4" />
-              <span>3. AI Outlines & Local Storage</span>
+              <Eye className="w-4 h-4" />
+              <span>4. AI Data Processing</span>
             </h3>
             <p className="text-xs md:text-sm text-text-secondary leading-relaxed">
-              <strong>AI Script Prompts:</strong> To generate outlines and speech drafts, the platform sends prompt keywords to secure artificial intelligence processing nodes. This query structure is strictly used to shape the response template.
+              When using the **AI Suggestion** or **AI Generation** utilities, your prompt keywords are sent to secure external artificial intelligence API services to produce speech drafts. 
             </p>
-            <p className="text-xs md:text-sm text-text-secondary leading-relaxed font-bold">
-              <strong>100% User Ownership:</strong> Your outlines, composed prompts, and edited teleprompter content remain exclusively yours. We do not recycle your drafts to train AI models.
+            <p className="text-xs md:text-sm text-text-secondary leading-relaxed">
+              <strong>Data Separation:</strong> These services do not store your prompts or recycle your custom drafts to train their models. Your AI-generated teleprompter templates belong entirely to you.
             </p>
           </section>
 
-          <section id="retention" className="space-y-3">
+          <section id="security" className="space-y-3">
             <h3 className="text-lg font-bold flex items-center gap-2 border-b border-border-subtle/40 pb-2">
               <ShieldCheck className="w-4 h-4 text-accent" />
-              <span>4. Data Security & Retention</span>
+              <span>5. Security & Data Retention</span>
             </h3>
             <p className="text-sm text-text-secondary leading-relaxed">
-              Because your scripts are stored in your local browser cache, clearing your browser data or application storage will delete your local scripts. We recommend backing up critical scripts in external document files.
+              We employ SSL/TLS encryption protocols during any API data transmissions (such as contacting AI generator endpoints).
             </p>
             <p className="text-sm text-text-secondary leading-relaxed">
-              We employ encryption standards on any configuration databases to protect system settings from unauthorized modification.
+              <strong>Retention Policy:</strong> Because we do not store your scripts on centralized database servers, we retain zero copies of your private speaking materials. They are retained in your browser cache indefinitely until you choose to delete them or clear your web browser data.
             </p>
           </section>
 
-          <section id="user-rights" className="space-y-3">
+          <section id="rights" className="space-y-3">
             <h3 className="text-lg font-bold flex items-center gap-2 border-b border-border-subtle/40 pb-2">
-              <Eye className="w-4 h-4 text-accent" />
-              <span>5. Children's Privacy & Policy Updates</span>
+              <FileText className="w-4 h-4 text-accent" />
+              <span>6. User Rights, Children, & Third-Parties</span>
             </h3>
             <p className="text-sm text-text-secondary leading-relaxed">
-              We do not knowingly target or gather details from individuals under the age of 13. We reserve the right to modify this policy as layout and feature specs update.
+              <strong>Your Control:</strong> You have absolute authority over your templates. You can edit, export, or permanently delete any scripts directly from the Dashboard or by clearing your browser cache.
+            </p>
+            <p className="text-sm text-text-secondary leading-relaxed">
+              <strong>Children's Privacy:</strong> SpeakFlow is not designed to target or log data from children under the age of 13.
+            </p>
+            <p className="text-sm text-text-secondary leading-relaxed">
+              <strong>International Data Transfers:</strong> Any AI prompt requests are processed in secure environments and in compliance with standard international data transmission principles.
             </p>
           </section>
 
           <section id="contact" className="space-y-4 pt-4 border-t border-border-subtle">
             <h3 className="text-lg font-bold flex items-center gap-2">
               <Mail className="w-4 h-4 text-accent" />
-              <span>6. Privacy Inquiries</span>
+              <span>7. Privacy Inquiries</span>
             </h3>
             <p className="text-sm text-text-secondary leading-relaxed">
-              If you have any questions about how your local storage parameters are handled, contact the developer at:
+              If you have queries or complaints regarding our data and local storage parameters, contact the developer at:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               <div className="p-3 bg-surface-secondary/40 rounded-xl border border-border-subtle/50 space-y-1">

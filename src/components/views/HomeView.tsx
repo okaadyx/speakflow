@@ -183,7 +183,7 @@ export default function HomeView({
                   variant="default"
                   size="md"
                   onClick={handleGeneration}
-                  disabled={isPending}
+                  disabled={isPending || !inputText.trim()}
                   className="flex-1 sm:flex-initial"
                 >
                   <Sparkles className="w-4 h-4" />

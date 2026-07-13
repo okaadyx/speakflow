@@ -114,18 +114,18 @@ export default function MyScriptsView({
                       setEditingScript(script);
                     }}
                     title="Edit script content"
-                    className="w-9 h-9 p-0 rounded-lg hover:text-accent hover:bg-hover-surface"
+                    className="w-10 h-10 p-0 rounded-lg hover:text-accent hover:bg-hover-surface"
                   >
-                    <Edit2 className="w-5 h-5" />
+                    <Edit2 className="w-5.5 h-5.5" />
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={(e) => openDeleteDialog(script.id, e)}
                     title="Delete script"
-                    className="w-9 h-9 p-0 rounded-lg hover:text-error hover:bg-error/5"
+                    className="w-10 h-10 p-0 rounded-lg hover:text-error hover:bg-error/5"
                   >
-                    <Trash2 className="w-5 h-5" />
+                    <Trash2 className="w-5.5 h-5.5" />
                   </Button>
                 </div>
               </CardFooter>

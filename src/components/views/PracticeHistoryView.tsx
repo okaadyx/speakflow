@@ -117,10 +117,10 @@ export default function PracticeHistoryView({
                         variant="ghost"
                         size="sm"
                         onClick={() => openDeleteDialog(log.id)}
-                        className="w-8 h-8 p-0 rounded-lg text-text-muted hover:text-error hover:bg-error/5"
+                        className="w-9 h-9 p-0 rounded-lg text-text-muted hover:text-error hover:bg-error/5"
                         title="Delete log record"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="w-5 h-5" />
                       </Button>
                     </td>
                   </tr>

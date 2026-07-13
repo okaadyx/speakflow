@@ -12,7 +12,7 @@ export default function TermsConditionsView() {
           Terms & Conditions
         </h1>
         <p className="text-text-secondary max-w-xl mx-auto text-sm md:text-base">
-          Please read these terms carefully before using SpeakFlow. By accessing the platform, you agree to be bound by them.
+          These terms govern your access to and usage of the SpeakFlow teleprompter platform.
         </p>
         <p className="text-xs text-text-muted">Last updated: July 2026</p>
       </div>
@@ -24,22 +24,28 @@ export default function TermsConditionsView() {
           </span>
           <nav className="flex flex-col gap-1 text-xs font-semibold text-text-secondary">
             <a href="#intro" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
-              1. Introduction
+              1. Acceptance & Eligibility
             </a>
-            <a href="#responsibilities" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
-              2. User Conduct
+            <a href="#conduct" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
+              2. User Conduct & Acceptable Use
             </a>
-            <a href="#ai-disclaimer" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
-              3. AI Disclaimer
+            <a href="#ownership" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
+              3. IP & Content Ownership
             </a>
-            <a href="#intellectual-property" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
-              4. IP Rights & Ownership
+            <a href="#ai-terms" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
+              4. AI Output Disclaimer
+            </a>
+            <a href="#availability" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
+              5. Service Uptime & Mods
             </a>
             <a href="#liability" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
-              5. Service Availability
+              6. Warranties & Liability Caps
+            </a>
+            <a href="#legal" className="px-3 py-2 rounded-lg hover:bg-surface-secondary/60 hover:text-text-primary transition-all">
+              7. Terminations & Governing Law
             </a>
             <a href="#contact" className="px-3 py-2 rounded-lg hover:bg-accent/10 hover:text-accent transition-all">
-              6. Contact Support
+              8. Contact Support
             </a>
           </nav>
         </div>
@@ -49,80 +55,109 @@ export default function TermsConditionsView() {
           <section id="intro" className="space-y-3">
             <h3 className="text-lg font-bold flex items-center gap-2 border-b border-border-subtle/40 pb-2">
               <FileText className="w-4 h-4 text-accent" />
-              <span>1. Introduction & Acceptance</span>
+              <span>1. Acceptance of Terms & Eligibility</span>
             </h3>
             <p className="text-sm text-text-secondary leading-relaxed">
-              Welcome to <strong>{DEVELOPER_CONFIG.productName}</strong>. These Terms & Conditions govern your access to and use of {DEVELOPER_CONFIG.productName}, a web-based teleprompter application designed and developed by <strong>{DEVELOPER_CONFIG.developerName}</strong>.
+              Welcome to <strong>{DEVELOPER_CONFIG.productName}</strong>. These Terms & Conditions form a binding legal agreement between you and the developer, <strong>{DEVELOPER_CONFIG.developerName}</strong>. By accessing or using the platform, you verify that you have read, understood, and agreed to these terms in full.
             </p>
             <p className="text-sm text-text-secondary leading-relaxed">
-              By using SpeakFlow, you represent that you are at least 13 years of age and agree to comply with all guidelines outlined in this document. If you do not agree, please discontinue using the service immediately.
+              <strong>Eligibility:</strong> You must be at least 13 years of age to access or utilize our teleprompter software. If you are under 18, you represent that you have parental or legal guardian consent to use this service.
             </p>
           </section>
 
-          <section id="responsibilities" className="space-y-3">
+          <section id="conduct" className="space-y-3">
             <h3 className="text-lg font-bold flex items-center gap-2 border-b border-border-subtle/40 pb-2">
               <Shield className="w-4 h-4 text-accent" />
-              <span>2. Eligibility & User Conduct</span>
+              <span>2. User Conduct & Acceptable Use</span>
             </h3>
             <p className="text-sm text-text-secondary leading-relaxed">
-              You are responsible for safeguarding your practice sessions, saved templates, and browser localStorage data. You agree not to abuse, disrupt, or bypass any application features, including rate limits or service configurations.
+              You agree to use SpeakFlow exclusively for lawful purposes and practice activities. You are solely responsible for all content written, pasted, or recorded during your sessions.
             </p>
-            <p className="text-sm text-text-secondary leading-relaxed font-bold">
-              Acceptable Use Policy:
-            </p>
-            <ul className="list-disc pl-5 text-sm text-text-secondary space-y-1.5">
-              <li>No automated data scraping or extraction from our teleprompter page.</li>
-              <li>No usage of script generators for fraudulent or abusive messaging.</li>
-              <li>Compliance with all applicable local, regional, and international speaking or broadcasting laws.</li>
-            </ul>
+            <div className="space-y-2">
+              <p className="text-sm text-text-secondary leading-relaxed font-bold">
+                Prohibited Activities:
+              </p>
+              <ul className="list-disc pl-5 text-sm text-text-secondary space-y-1.5">
+                <li>Attempting to scrap, copy, reverse engineer, or extract code or layout interfaces from SpeakFlow.</li>
+                <li>Using the AI generation interface to compose defamatory, harassing, threatening, or illegal speech outlines.</li>
+                <li>Interfering with, disabling, or modifying configuration limits, rate limit locks, or visual stylesheets.</li>
+                <li>Utilizing automated bots, scripts, or spiders to interact with the application.</li>
+              </ul>
+            </div>
           </section>
 
-          <section id="ai-disclaimer" className="space-y-3 bg-accent/5 p-4.5 rounded-2xl border border-accent/15">
-            <h3 className="text-base font-extrabold text-accent flex items-center gap-2">
-              <Scale className="w-4 h-4" />
-              <span>3. AI-Generated Content Disclaimer</span>
-            </h3>
-            <p className="text-xs md:text-sm text-text-secondary leading-relaxed">
-              SpeakFlow incorporates intelligent third-party artificial intelligence engines to help generate speech outlines, scripts, and practice guides. All AI outputs are generated based on user prompts.
-            </p>
-            <p className="text-xs md:text-sm text-text-secondary leading-relaxed font-bold">
-              We make no representations or warranties regarding the accuracy, legal safety, completeness, or appropriateness of AI outlines. Users must carefully review and edit any AI script before public presentation, commercial publication, or recording.
-            </p>
-          </section>
-
-          <section id="intellectual-property" className="space-y-3">
+          <section id="ownership" className="space-y-3">
             <h3 className="text-lg font-bold flex items-center gap-2 border-b border-border-subtle/40 pb-2">
               <FileText className="w-4 h-4 text-accent" />
-              <span>4. Intellectual Property & Ownership</span>
+              <span>3. IP & Content Ownership</span>
             </h3>
             <p className="text-sm text-text-secondary leading-relaxed">
-              The application layout, design systems, graphical assets, styling parameters, and unique code (excluding standard library dependencies) are the absolute intellectual property of <strong>{DEVELOPER_CONFIG.developerName}</strong>.
+              <strong>Platform Property:</strong> SpeakFlow, its design architecture, layouts, gradients, stylesheets, dynamic logic models, animations, icons, branding, and assets belong exclusively to Aajad Yadav. You receive a limited, revocable license to access the application for speaking practices.
             </p>
             <p className="text-sm text-text-secondary leading-relaxed">
-              <strong>User Content Ownership:</strong> Any scripts, presentation drafts, or recordings created or uploaded by you inside SpeakFlow remain 100% under your intellectual ownership. SpeakFlow does not claim rights to your raw creative materials.
+              <strong>User Content:</strong> You retain complete intellectual property ownership over any original templates, outlines, speech recordings, or customized drafts created inside the platform. SpeakFlow does not claim ownership or licensing rights over your private scripts.
+            </p>
+          </section>
+
+          <section id="ai-terms" className="space-y-3 bg-accent/5 p-4.5 rounded-2xl border border-accent/15">
+            <h3 className="text-base font-extrabold text-accent flex items-center gap-2">
+              <Scale className="w-4 h-4" />
+              <span>4. AI Output Disclaimer</span>
+            </h3>
+            <p className="text-xs md:text-sm text-text-secondary leading-relaxed">
+              The AI outline and drafting features utilize third-party generative intelligence models.
+            </p>
+            <p className="text-xs md:text-sm text-text-secondary leading-relaxed font-bold">
+              We do not verify the legal accuracy, safety, copyright status, or factual reliability of AI outputs. You agree to assume all liability and legal responsibilities for auditing and editing AI outlines before sharing them or broadcasting recordings.
+            </p>
+          </section>
+
+          <section id="availability" className="space-y-3">
+            <h3 className="text-lg font-bold flex items-center gap-2 border-b border-border-subtle/40 pb-2">
+              <Shield className="w-4 h-4 text-accent" />
+              <span>5. Service Availability & Modifications</span>
+            </h3>
+            <p className="text-sm text-text-secondary leading-relaxed">
+              We reserve the right to modify, updates, pause, or suspend any portion of SpeakFlow (including AI features, database hooks, and local styles) at any time without notice.
+            </p>
+            <p className="text-sm text-text-secondary leading-relaxed">
+              We make no guarantee that your localStorage data will remain permanent. You are solely responsible for backing up critical script text on external storage files.
             </p>
           </section>
 
           <section id="liability" className="space-y-3">
             <h3 className="text-lg font-bold flex items-center gap-2 border-b border-border-subtle/40 pb-2">
               <Shield className="w-4 h-4 text-accent" />
-              <span>5. Availability, Warranties & Liability</span>
+              <span>6. Warranties & Liability Caps</span>
             </h3>
-            <p className="text-sm text-text-secondary leading-relaxed">
-              {DEVELOPER_CONFIG.productName} is provided on an "AS IS" and "AS AVAILABLE" basis. We make no guarantees of continuous uptime or bug-free operations.
+            <p className="text-sm text-text-secondary leading-relaxed font-semibold">
+              SpeakFlow is provided "AS IS" without warranties of any kind, either express or implied.
             </p>
             <p className="text-sm text-text-secondary leading-relaxed">
-              To the maximum extent permitted by law, the developer (Aajad Yadav) shall not be liable for any direct, indirect, incidental, or consequential damages resulting from browser local storage clearing, lost scripts, or script delivery issues.
+              To the maximum extent permitted by law, Aajad Yadav or any affiliates shall not be liable for any direct, indirect, special, punitive, or consequential damages (including lost profits, loss of data, or speech presentation failures) arising out of your use or inability to use the teleprompter.
+            </p>
+          </section>
+
+          <section id="legal" className="space-y-3">
+            <h3 className="text-lg font-bold flex items-center gap-2 border-b border-border-subtle/40 pb-2">
+              <FileText className="w-4 h-4 text-accent" />
+              <span>7. Terminations & Governing Law</span>
+            </h3>
+            <p className="text-sm text-text-secondary leading-relaxed">
+              <strong>Termination:</strong> We reserve the right to block access or terminate service access if we detect abusive actions, bots, or terms violations.
+            </p>
+            <p className="text-sm text-text-secondary leading-relaxed">
+              <strong>Governing Law:</strong> These terms are governed by and construed in accordance with the laws of India, without regard to conflict of law principles.
             </p>
           </section>
 
           <section id="contact" className="space-y-4 pt-4 border-t border-border-subtle">
             <h3 className="text-lg font-bold flex items-center gap-2">
               <HelpCircle className="w-4 h-4 text-accent" />
-              <span>6. Contact Information</span>
+              <span>8. Terms & Support Support</span>
             </h3>
             <p className="text-sm text-text-secondary leading-relaxed">
-              For any clarification regarding these terms, contact the developer at:
+              For any clarification regarding user responsibilities or platform ownership, contact the support desk at:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               <div className="p-3 bg-surface-secondary/40 rounded-xl border border-border-subtle/50 space-y-1">
@@ -138,7 +173,7 @@ export default function TermsConditionsView() {
                 </a>
               </div>
               <div className="p-3 bg-surface-secondary/40 rounded-xl border border-border-subtle/50 space-y-1 sm:col-span-2">
-                <span className="font-bold text-text-muted">Portfolio & Developer Details</span>
+                <span className="font-bold text-text-muted">Developer Details</span>
                 <a href={DEVELOPER_CONFIG.portfolioUrl} target="_blank" rel="noreferrer" className="block text-accent hover:underline">
                   {DEVELOPER_CONFIG.developerName} Portfolio ({DEVELOPER_CONFIG.portfolioUrl})
                 </a>
