@@ -108,7 +108,21 @@ export default function App() {
     };
   }, [isRecording]);
 
-  // Scroll logic is now handled self-contained inside the TeleprompterView component to ensure layout-relative, jitter-free fluid rendering.
+  // Prevent body/html page scroll when in fullscreen practice mode
+  useEffect(() => {
+    if (isPracticing && isFullscreen) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+      window.scrollTo(0, 0);
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [isPracticing, isFullscreen]);
 
   // Fullscreen Handler
   const toggleFullscreen = () => {
