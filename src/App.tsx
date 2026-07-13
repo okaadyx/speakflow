@@ -6,6 +6,10 @@ import {
   PracticeHistoryView,
   EditorView,
   TeleprompterView,
+  SupportView,
+  PrivacyPolicyView,
+  TermsConditionsView,
+  AboutView,
 } from "./components/views";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { Button } from "./components/ui";
@@ -15,7 +19,7 @@ import { INITIAL_SCRIPTS } from "./types";
 
 export default function App() {
   // Navigation & Theme State
-  const [activeTab, setActiveTab] = useState<"home" | "my-scripts" | "practice-history">("home");
+  const [activeTab, setActiveTab] = useState<string>("home");
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   // Scripts & Logs persistent states using custom hook
@@ -370,13 +374,29 @@ Let us speak not just to be heard, but to inspire, to motivate, and to build bri
             setEditingScript={setEditingScript}
             startNewScript={startNewScript}
           />
+        ) : activeTab === "support" ? (
+          <SupportView />
+        ) : activeTab === "privacy-policy" ? (
+          <PrivacyPolicyView />
+        ) : activeTab === "terms-conditions" ? (
+          <TermsConditionsView />
+        ) : activeTab === "about" ? (
+          <AboutView />
         ) : (
           <PracticeHistoryView theme={theme} logs={logs} setLogs={setLogs} />
         )}
       </main>
 
       {/* Footer component */}
-      {!(isPracticing && isFullscreen) && <Footer theme={theme} />}
+      {!(isPracticing && isFullscreen) && (
+        <Footer
+          theme={theme}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          setIsPracticing={setIsPracticing}
+          setEditingScript={setEditingScript}
+        />
+      )}
     </div>
   );
 }

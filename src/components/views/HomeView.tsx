@@ -102,10 +102,7 @@ export default function HomeView({
     <div className="space-y-16 animate-fadeIn">
       {/* Hero Section */}
       <div className="text-center max-w-4xl mx-auto space-y-6">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 text-accent border border-accent/20 mb-2">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Powered by Gemini AI Integration</span>
-        </div>
+       
 
         <h1 className="font-display font-extrabold text-5xl md:text-7xl leading-tight tracking-tight text-text-primary">
           Practice Your Speech

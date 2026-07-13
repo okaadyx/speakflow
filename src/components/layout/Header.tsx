@@ -2,8 +2,8 @@ import { Sun, Moon, Settings, Maximize, Minimize, BookOpen, History, Home } from
 import { Button } from "../ui/button";
 
 interface HeaderProps {
-  activeTab: "home" | "my-scripts" | "practice-history";
-  setActiveTab: (tab: "home" | "my-scripts" | "practice-history") => void;
+  activeTab: string;
+  setActiveTab: (tab: any) => void;
   theme: "dark" | "light";
   setTheme: (theme: "dark" | "light") => void;
   showSettings: boolean;
@@ -30,7 +30,7 @@ export default function Header({
   setEditingScript,
   setIsPracticing,
 }: HeaderProps) {
-  const navigateTo = (tab: "home" | "my-scripts" | "practice-history") => {
+  const navigateTo = (tab: any) => {
     setActiveTab(tab);
     setIsPracticing(false);
     setEditingScript(null);
