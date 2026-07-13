@@ -14,11 +14,7 @@ import {
   Sliders,
   Type,
   Layout,
-  Minus,
-  Plus,
   RefreshCw,
-  Eye,
-  EyeOff,
 } from "lucide-react";
 import type { Script } from "../../types";
 import { Button, Sheet } from "../ui";
@@ -196,7 +192,7 @@ export default function TeleprompterView({
   // UI Modes & States
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isMirrored, setIsMirrored] = useState(false);
-  const [isFocusMode, setIsFocusMode] = useState(false);
+  const [isFocusMode] = useState(false);
   const [activeLineIndex, setActiveLineIndex] = useState(0);
 
   // Dynamic layout metrics calculated Reactively by the ResizeObserver
@@ -306,30 +302,6 @@ export default function TeleprompterView({
     });
 
     setActiveLineIndex(closestIndex);
-  };
-
-  // Font Size Actions
-  const handleIncreaseFontSize = () => {
-    const idx = FONT_SIZES.indexOf(fontSize);
-    if (idx < FONT_SIZES.length - 1) {
-      setFontSize(FONT_SIZES[idx + 1]!);
-    }
-  };
-
-  const handleDecreaseFontSize = () => {
-    const idx = FONT_SIZES.indexOf(fontSize);
-    if (idx > 0) {
-      setFontSize(FONT_SIZES[idx - 1]!);
-    }
-  };
-
-  // Speed Control Actions
-  const handleIncreaseSpeed = () => {
-    setScrollSpeed(Math.min(4.0, Math.round((scrollSpeed + 0.1) * 10) / 10));
-  };
-
-  const handleDecreaseSpeed = () => {
-    setScrollSpeed(Math.max(0.5, Math.round((scrollSpeed - 0.1) * 10) / 10));
   };
 
   // Calculate dynamic paddingTop and paddingBottom to center the first sentence at scrollTop = 0

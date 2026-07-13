@@ -1,4 +1,3 @@
-import React from "react";
 import { DEVELOPER_CONFIG } from "../../config/developer";
 import { Info, Award, User, Code, Heart, MessageSquare } from "lucide-react";
 
