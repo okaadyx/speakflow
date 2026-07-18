@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sparkles, PenTool, ChevronRight, Clock, Sprout, Mic, Shield, Megaphone, Eraser, Smile, Award, Trophy } from "lucide-react";
+import { Sparkles, PenTool, ChevronRight, Clock, Sprout, Mic, Shield, Megaphone, Eraser, Smile, Award, Trophy, Leaf, Video, Star, Globe } from "lucide-react";
 import type { Script } from "../../types";
 import { INSPIRATIONS, CATEGORIES } from "../../types";
 import { useCreateScript } from "../../hooks/useCreateScript";
@@ -77,43 +77,64 @@ export default function HomeView({
 
   const renderInspirationIcon = (type: string) => {
     const iconClass = "w-5 h-5 text-accent";
-    switch (type) {
-      case "leaf":
-        return <Sprout className={iconClass} />;
-      case "mic":
-        return <Mic className={iconClass} />;
-      case "shield":
-        return <Shield className={iconClass} />;
-      case "megaphone":
-      default:
-        return <Megaphone className={iconClass} />;
-    }
+   switch (type) {
+  case "leaf":
+    return <Leaf className={iconClass}/>;
+  case "mic":
+    return <Mic className={iconClass}/>;
+  case "shield":
+    return <Shield className={iconClass}/>;
+  case "megaphone":
+    return <Megaphone className={iconClass}/>;
+  case "video":
+    return <Video className={iconClass}/>;
+  case "star":
+    return <Star className={iconClass}/>;
+  case "sparkles":
+    return <Sparkles className={iconClass}/>;
+  case "globe":
+    return <Globe className={iconClass}/>;
+}
   };
 
-  const selectCategory = (cat: string) => {
-    setActiveCategory(cat);
-    if (cat === "English Speaking") {
+ const selectCategory = (cat: string) => {
+  setActiveCategory(cat);
+
+  switch (cat) {
+    case "English Speaking":
       setInputText(
-        "Draft an English practice speech on giving constructive feedback in corporate environments without demotivating team members."
+        "Write a simple English practice speech about building good daily habits and staying consistent."
       );
-    } else if (cat === "Storytelling") {
+      break;
+
+    case "Storytelling":
       setInputText(
-        "Create a narrative speech demonstrating how learning from failing is the ultimate catalyst for software engineers."
+        "Tell an engaging story about overcoming a difficult challenge and the lessons learned."
       );
-    } else if (cat === "Interview Practice") {
+      break;
+
+    case "Interview Practice":
       setInputText(
-        "Create a behavioral script describing how I handled a major scope-creep incident in my previous project using the STAR framework."
+        "Create an interview answer describing a time when I solved a difficult problem and what I learned from the experience."
       );
-    } else if (cat === "Public Speaking") {
+      break;
+
+    case "Public Speaking":
       setInputText(
-        "Write an inspiring opening key speech addressing why digital accessibility needs to be standard across the web."
+        "Write an inspiring speech about why small actions can create meaningful change in our lives."
       );
-    } else if (cat === "Presentation") {
+      break;
+
+    case "Presentation":
       setInputText(
-        "Draft a structured presentation introducing our new platform SpeakFlow, outlining its architecture and primary user benefits."
+        "Create a clear presentation introducing a new product or idea, explaining its purpose, key features, and benefits."
       );
-    }
-  };
+      break;
+
+    default:
+      setInputText("");
+  }
+};
 
   return (
     <div className="space-y-16 animate-fadeIn">
@@ -159,7 +180,7 @@ export default function HomeView({
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="text-xs font-bold text-accent flex items-center gap-1.5 animate-pulse">
                     <Sparkles className="w-3.5 h-3.5 animate-spin" />
-                    <span>AI Generating Speech (Connecting to backend)...</span>
+                    <span>SpeakFlow AI is writing your script...</span>
                   </span>
                 </div>
                 <Progress value={95} className="animate-pulse" />
