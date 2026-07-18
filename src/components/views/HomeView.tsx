@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sparkles, PenTool, ChevronRight, Clock, Sprout, Mic, Shield, Megaphone, Eraser, Smile, Award, Trophy, Leaf, Video, Star, Globe } from "lucide-react";
+import { Sparkles, PenTool, ChevronRight, Clock, Mic, Shield, Megaphone, Eraser, Smile, Award, Trophy, Leaf, Video, Star, Globe } from "lucide-react";
 import type { Script } from "../../types";
 import { INSPIRATIONS, CATEGORIES } from "../../types";
 import { useCreateScript } from "../../hooks/useCreateScript";
